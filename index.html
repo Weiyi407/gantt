@@ -8,7 +8,7 @@
  * 机制:页面打开后以 no-store 方式拉取服务器最新HTML,比对 BUILD_ID,
  *       发现新版就自动跳转到带 ?build=新号 的URL(缓存键不同,强制加载新版)。
  * 用法:每次「导出HTML并上传GitHub」前,把 BUILD_ID 改成新值(建议 当天日期+序号)。 */
-var BUILD_ID = '20260918v3e';
+var BUILD_ID = '20260924v4a';
 (function () {
   try {
     var DONE_KEY = 'gantt_build_done';
@@ -37,7 +37,7 @@ var BUILD_ID = '20260918v3e';
 })();
 </script>
 <title>PCS产品规划里程碑</title>
-<script src="https://cdn.bootcdn.net/ajax/libs/echarts/5.4.3/echarts.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/echarts/5.4.3/echarts.min.js" onerror="this.src='https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js'"></script>
 <style>
   * { box-sizing: border-box; }
   body { font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
@@ -126,6 +126,35 @@ var BUILD_ID = '20260918v3e';
   #chartWrap::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 6px; }
   #chartWrap::-webkit-scrollbar-thumb { background: #c1c1c1; border-radius: 6px; }
   #chartWrap::-webkit-scrollbar-thumb:hover { background: #a8a8a8; }
+
+  /* ===== 改进表(与甘特图完全独立) ===== */
+  #improveTableWrap {
+    overflow: auto;
+    max-height: 480px;
+    border: 1px solid #e4e7ed;
+    border-radius: 4px;
+  }
+  #improveTable { font-size: 13px; }
+  #improveTable th {
+    background: #f5f7fa; position: sticky; top: 0; z-index: 2;
+    font-size: 13.5px; font-weight: bold; color: #303133;
+    padding: 9px 10px; text-align: center; vertical-align: middle;
+  }
+  #improveTable td {
+    text-align: left; vertical-align: middle;
+    padding: 7px 12px; font-size: 13px; color: #444; line-height: 1.5;
+  }
+  #improveTable textarea {
+    width: 100%; border: none; background: transparent; resize: vertical;
+    font-size: 13px; font-family: inherit; color: inherit;
+    padding: 2px 4px; line-height: 1.5; min-height: 30px;
+  }
+  /* 隐藏原生斜杠手柄,保留拖拽调整高度功能 */
+  #improveTable textarea::-webkit-resizer { display: none; }
+  #improveTable textarea::-moz-resizer { display: none; }
+  #improveTable textarea:focus { outline: 1px solid #409eff; background: #ecf5ff; }
+  .improve-hint { color: #909399; font-size: 12px; margin-top: 8px; line-height: 1.6; }
+  #improveEmpty { color: #c0c4cc; font-size: 13px; padding: 16px; text-align: center; }
 </style>
 </head>
 <body>
@@ -135,19 +164,36 @@ var BUILD_ID = '20260918v3e';
   <div class="chart-box" style="position:relative">
     <div id="yLabels" style="top: 20px; left: 20px; width: 125px; height: 517px; display: block;"><div class="y-label-row" style="position: absolute; left: 0px; right: 0px; height: 20px; top: 30px; font-weight: bold;">1000kW-V2</div><div class="y-label-row y-label-actual" style="position: absolute; left: 0px; right: 0px; height: 20px; top: 56px;">实际</div><div class="y-label-row" style="position: absolute; left: 0px; right: 0px; height: 20px; top: 96px; font-weight: bold;">1750kW-V2-构网</div><div class="y-label-row y-label-actual" style="position: absolute; left: 0px; right: 0px; height: 20px; top: 122px;">实际</div><div class="y-label-row" style="position: absolute; left: 0px; right: 0px; height: 20px; top: 162px; font-weight: bold;">3450kW-V2-跟网</div><div class="y-label-row y-label-actual" style="position: absolute; left: 0px; right: 0px; height: 20px; top: 188px;">实际</div><div class="y-label-row" style="position: absolute; left: 0px; right: 0px; height: 20px; top: 228px; font-weight: bold;">3450kW-V1-跟网</div><div class="y-label-row y-label-actual" style="position: absolute; left: 0px; right: 0px; height: 20px; top: 254px;">实际</div><div class="y-label-row" style="position: absolute; left: 0px; right: 0px; height: 20px; top: 294px; font-weight: bold;">1250kW-V2-构网</div><div class="y-label-row y-label-actual" style="position: absolute; left: 0px; right: 0px; height: 20px; top: 320px;">实际</div><div class="y-label-row" style="position: absolute; left: 0px; right: 0px; height: 20px; top: 360px; font-weight: bold;">2500kW-V2-跟网</div><div class="y-label-row y-label-actual" style="position: absolute; left: 0px; right: 0px; height: 20px; top: 386px;">实际</div><div class="y-label-row" style="position: absolute; left: 0px; right: 0px; height: 20px; top: 426px; font-weight: bold;">2500kW-V1-跟网</div><div class="y-label-row y-label-actual" style="position: absolute; left: 0px; right: 0px; height: 20px; top: 452px;">实际</div></div>
     <div id="chartWrap" style="height: 537px;">
-      <div id="chart" _echarts_instance_="ec_1789723282184" style="height: 517px; width: 1594px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); position: relative;"><div style="position: relative; width: 1594px; height: 517px; padding: 0px; margin: 0px; border-width: 0px; cursor: default;"><canvas data-zr-dom-id="zr_0" width="1817" height="589" style="position: absolute; left: 0px; top: 0px; width: 1594px; height: 517px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;"></canvas><canvas data-zr-dom-id="zr_100000" width="1817" height="589" style="position: absolute; left: 0px; top: 0px; width: 1594px; height: 517px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;"></canvas></div><div class="" style="position: absolute; display: block; border-style: solid; white-space: nowrap; z-index: 9999999; box-shadow: rgba(0, 0, 0, 0.2) 1px 2px 10px; transition: opacity 0.2s cubic-bezier(0.23, 1, 0.32, 1), visibility 0.2s cubic-bezier(0.23, 1, 0.32, 1), transform 0.4s cubic-bezier(0.23, 1, 0.32, 1); background-color: rgb(255, 255, 255); border-width: 1px; border-radius: 4px; color: rgb(102, 102, 102); font: 14px / 21px &quot;Microsoft YaHei&quot;; padding: 10px; top: 0px; left: 0px; transform: translate3d(519px, 339px, 0px); border-color: rgb(230, 149, 8); pointer-events: none; visibility: hidden; opacity: 0;"><b>2500kW-V1-跟网</b><br><span style="display:inline-block;margin-right:4px;border-radius:10px;width:10px;height:10px;background-color:#E69508;"></span> 一阶段测试问题闭环<br>计划：2026-9-15 ~ 2026-9-20 (6天)</div></div>
+      <div id="chart" _echarts_instance_="ec_1790218612318" style="height: 517px; width: 1594px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); position: relative;"><div style="position: relative; width: 1594px; height: 517px; padding: 0px; margin: 0px; border-width: 0px; cursor: default;"><canvas data-zr-dom-id="zr_0" width="1594" height="517" style="position: absolute; left: 0px; top: 0px; width: 1594px; height: 517px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;"></canvas><canvas data-zr-dom-id="zr_100000" width="1594" height="517" style="position: absolute; left: 0px; top: 0px; width: 1594px; height: 517px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;"></canvas></div><div class="" style="position: absolute; display: block; border-style: solid; white-space: nowrap; z-index: 9999999; box-shadow: rgba(0, 0, 0, 0.2) 1px 2px 10px; background-color: rgb(255, 255, 255); border-width: 1px; border-radius: 4px; color: rgb(102, 102, 102); font: 14px / 21px &quot;Microsoft YaHei&quot;; padding: 10px; top: 0px; left: 0px; transform: translate3d(687px, 397px, 0px); border-color: rgb(230, 149, 8); pointer-events: none; visibility: hidden; opacity: 0;"><b>2500kW-V2-跟网</b><br><span style="display:inline-block;margin-right:4px;border-radius:10px;width:10px;height:10px;background-color:#E69508;"></span> 一阶段测试问题闭环<br>计划：2026-9-30 ~ 2026-10-15 (16天)</div></div>
     </div>
-    <div id="legendBox"><div class="legend-group"><div class="legend-group-title">批量</div><div class="legend-depth-row"><span class="legend-depth-swatch" style="background:#9FD0EA"></span><span>首台装配完成</span></div><div class="legend-depth-row"><span class="legend-depth-swatch" style="background:#5BA8D6"></span><span>测试完成</span></div><div class="legend-depth-row"><span class="legend-depth-swatch" style="background:#1F78B4"></span><span>测试问题闭环</span></div><div class="legend-depth-row"><span class="legend-depth-swatch" style="background:#0B3D63"></span><span>归档完成/发布提单</span></div></div><div class="legend-group"><div class="legend-group-title">一阶段降本</div><div class="legend-depth-row"><span class="legend-depth-swatch" style="background:#FCDD7A"></span><span>首台装配完成</span></div><div class="legend-depth-row"><span class="legend-depth-swatch" style="background:#F7BE43"></span><span>测试完成</span></div><div class="legend-depth-row"><span class="legend-depth-swatch" style="background:#E69508"></span><span>测试问题闭环</span></div><div class="legend-depth-row"><span class="legend-depth-swatch" style="background:#9C6B00"></span><span>归档完成/发布提单</span></div></div><div class="legend-group"><div class="legend-group-title">二阶段降本</div><div class="legend-depth-row"><span class="legend-depth-swatch" style="background:#FAA996"></span><span>首台装配完成</span></div><div class="legend-depth-row"><span class="legend-depth-swatch" style="background:#F1775F"></span><span>测试完成</span></div><div class="legend-depth-row"><span class="legend-depth-swatch" style="background:#D62412"></span><span>测试问题闭环</span></div><div class="legend-depth-row"><span class="legend-depth-swatch" style="background:#8C0F0A"></span><span>归档完成/发布提单</span></div></div><div class="legend-group"><div class="legend-group-title">板卡升级</div><div class="legend-depth-row"><span class="legend-depth-swatch" style="background:#A0E7E5"></span><span>首台装配完成</span></div><div class="legend-depth-row"><span class="legend-depth-swatch" style="background:#2EC4B6"></span><span>测试完成</span></div><div class="legend-depth-row"><span class="legend-depth-swatch" style="background:#0891A8"></span><span>测试问题闭环</span></div><div class="legend-depth-row"><span class="legend-depth-swatch" style="background:#05666A"></span><span>归档完成/发布提单</span></div></div><div class="legend-group"><div class="legend-group-title">延期标记</div><div class="legend-depth-row"><span>①实际结束晚于计划 ≥ 7 天;或②今天已超计划结束 ≥ 7 天且未 100%</span></div></div></div>
+    <div id="legendBox"><div class="legend-group"><div class="legend-group-title">批量</div><div class="legend-depth-row"><span class="legend-depth-swatch" style="background:#9FD0EA"></span><span>首台装配完成</span></div><div class="legend-depth-row"><span class="legend-depth-swatch" style="background:#5BA8D6"></span><span>测试完成</span></div><div class="legend-depth-row"><span class="legend-depth-swatch" style="background:#1F78B4"></span><span>测试问题闭环</span></div><div class="legend-depth-row"><span class="legend-depth-swatch" style="background:#0B3D63"></span><span>归档完成/发布提单</span></div></div><div class="legend-group"><div class="legend-group-title">一阶段降本</div><div class="legend-depth-row"><span class="legend-depth-swatch" style="background:#FCDD7A"></span><span>首台装配完成</span></div><div class="legend-depth-row"><span class="legend-depth-swatch" style="background:#F7BE43"></span><span>测试完成</span></div><div class="legend-depth-row"><span class="legend-depth-swatch" style="background:#E69508"></span><span>测试问题闭环</span></div><div class="legend-depth-row"><span class="legend-depth-swatch" style="background:#9C6B00"></span><span>归档完成/发布提单</span></div></div><div class="legend-group"><div class="legend-group-title">二阶段降本</div><div class="legend-depth-row"><span class="legend-depth-swatch" style="background:#FAA996"></span><span>首台装配完成</span></div><div class="legend-depth-row"><span class="legend-depth-swatch" style="background:#F1775F"></span><span>测试完成</span></div><div class="legend-depth-row"><span class="legend-depth-swatch" style="background:#D62412"></span><span>测试问题闭环</span></div><div class="legend-depth-row"><span class="legend-depth-swatch" style="background:#8C0F0A"></span><span>归档完成/发布提单</span></div></div><div class="legend-group"><div class="legend-group-title">延期标记</div><div class="legend-depth-row"><span>①实际结束晚于计划 ≥ 7 天;或②今天已超计划结束 ≥ 7 天且未 100%</span></div></div></div>
     <div id="err" style="display: none;"></div>
   </div>
 
+  <!-- ===== 改进表(与上方甘特图完全独立,互不影响) ===== -->
   <div class="panel">
-    <h2>📦 协作 - 导出/导入</h2>
-    <div class="toolbar">
+    <h2>📋 各阶段版本说明</h2>
+    <div id="improveTableWrap">
+      <table id="improveTable">
+        <thead>
+          <tr>
+            <th style="width:160px">机型</th>
+            <th style="width:90px">阶段</th>
+            <th style="width:90px">责任人</th>
+            <th>说明</th>
+          </tr>
+        </thead>
+        <tbody id="improveBody"><tr><td><textarea data-i="0" data-k="machine">2500kW-V1-跟网</textarea></td><td><textarea data-i="0" data-k="stage">一阶段</textarea></td><td><textarea data-i="0" data-k="owner">李克俭</textarea></td><td><textarea data-i="0" data-k="improvement" rows="2">基于主回路器件和结构器件做降本</textarea></td></tr><tr><td><textarea data-i="1" data-k="machine">2500kW-V1-跟网</textarea></td><td><textarea data-i="1" data-k="stage">二阶段</textarea></td><td><textarea data-i="1" data-k="owner">马雨豪</textarea></td><td><textarea data-i="1" data-k="improvement" rows="2">基于散热相关做降本</textarea></td></tr><tr><td><textarea data-i="2" data-k="machine">2500kW-V2-跟网</textarea></td><td><textarea data-i="2" data-k="stage">一阶段</textarea></td><td><textarea data-i="2" data-k="owner">李克俭</textarea></td><td><textarea data-i="2" data-k="improvement" rows="2">基于主回路器件和结构器件做降本</textarea></td></tr><tr><td><textarea data-i="3" data-k="machine">2500kW-V2-跟网</textarea></td><td><textarea data-i="3" data-k="stage">板卡升级</textarea></td><td><textarea data-i="3" data-k="owner">李克俭</textarea></td><td><textarea data-i="3" data-k="improvement" rows="2">基于V2板卡测试问题进行闭环升级</textarea></td></tr><tr><td><textarea data-i="4" data-k="machine">2500kW-V2-跟网</textarea></td><td><textarea data-i="4" data-k="stage">二阶段</textarea></td><td><textarea data-i="4" data-k="owner">马雨豪</textarea></td><td><textarea data-i="4" data-k="improvement" rows="2">基于散热相关做降本</textarea></td></tr><tr><td><textarea data-i="5" data-k="machine">1250kW-V2-构网</textarea></td><td><textarea data-i="5" data-k="stage">一阶段</textarea></td><td><textarea data-i="5" data-k="owner">李克俭</textarea></td><td><textarea data-i="5" data-k="improvement" rows="2">基于主回路器件和结构器件做降本</textarea></td></tr><tr><td><textarea data-i="6" data-k="machine">3450kW-V1-跟网</textarea></td><td><textarea data-i="6" data-k="stage">批量</textarea></td><td><textarea data-i="6" data-k="owner">胡小龙</textarea></td><td><textarea data-i="6" data-k="improvement" rows="2"></textarea></td></tr><tr><td><textarea data-i="7" data-k="machine">3450kW-V1-跟网</textarea></td><td><textarea data-i="7" data-k="stage">一阶段</textarea></td><td><textarea data-i="7" data-k="owner">任晓娜</textarea></td><td><textarea data-i="7" data-k="improvement" rows="2">基于主回路器件二供平替物料的降本</textarea></td></tr><tr><td><textarea data-i="8" data-k="machine">3450kW-V2-跟网</textarea></td><td><textarea data-i="8" data-k="stage">一阶段</textarea></td><td><textarea data-i="8" data-k="owner">任晓娜</textarea></td><td><textarea data-i="8" data-k="improvement" rows="2">基于主回路器件二供平替物料的降本</textarea></td></tr><tr><td><textarea data-i="9" data-k="machine">3450kW-V2-跟网</textarea></td><td><textarea data-i="9" data-k="stage">二阶段</textarea></td><td><textarea data-i="9" data-k="owner">任晓娜</textarea></td><td><textarea data-i="9" data-k="improvement" rows="2">基于结构设计改动的降本</textarea></td></tr><tr><td><textarea data-i="10" data-k="machine">3450kW-V2-跟网</textarea></td><td><textarea data-i="10" data-k="stage">热虹吸</textarea></td><td><textarea data-i="10" data-k="owner">宋英杰</textarea></td><td><textarea data-i="10" data-k="improvement" rows="2">基于相变技术引入的降本（热虹吸散热器、IGBT）</textarea></td></tr><tr><td><textarea data-i="11" data-k="machine">1750kW-V2-构网</textarea></td><td><textarea data-i="11" data-k="stage">一阶段</textarea></td><td><textarea data-i="11" data-k="owner">任晓娜</textarea></td><td><textarea data-i="11" data-k="improvement" rows="2">基于主回路器件二供平替物料的降本</textarea></td></tr><tr><td><textarea data-i="12" data-k="machine">1000kW-V2</textarea></td><td><textarea data-i="12" data-k="stage">一阶段</textarea></td><td><textarea data-i="12" data-k="owner">郭龙</textarea></td><td><textarea data-i="12" data-k="improvement" rows="2">针对低温场景需求，基于3450KW进行的改制</textarea></td></tr></tbody>
+      </table>
+      <div id="improveEmpty" style="display: none;">暂无数据，点击下方"导入 CSV"可同时导入甘特图与本表</div>
+    </div>
+    <!-- 统一操作栏(甘特图 + 改进表),置于页面最下方 -->
+    <div class="toolbar" style="margin-top:12px;">
       <button class="success" onclick="exportHTML()">📦 导出 HTML</button>
       <button onclick="document.getElementById('csvInput').click()">📥 导入 CSV</button>
       <input type="file" id="csvInput" accept=".csv" style="display:none" onchange="importCSV(event)">
-      <button onclick="exportCSV()">导出 CSV</button>
+      <button onclick="exportCSV()">📊 导出甘特图 CSV</button>
+      <button onclick="exportImprovements()">📋 导出说明 CSV</button>
     </div>
   </div>
 </div>
@@ -159,7 +205,7 @@ window.onerror = function(msg) {
 };
 
 // ===== 数据(每条加 progress 字段,0-100,默认100) =====
-var defaultData = [{"resource":"2500kW-V1-跟网","task":"一阶段测试问题闭环","start":"2026-9-15","end":"2026-9-20","progress":100,"actualStart":"","actualEnd":""},{"resource":"2500kW-V1-跟网","task":"一阶段归档完成","start":"2026-9-20","end":"2026-9-30","progress":100,"actualStart":"","actualEnd":""},{"resource":"2500kW-V1-跟网","task":"一阶段发布/提单","start":"2026-9-30","end":"2026-9-30","progress":100,"actualStart":"","actualEnd":""},{"resource":"2500kW-V1-跟网","task":"二阶段测试完成","start":"2026-9-30","end":"2026-11-23","progress":5,"actualStart":"","actualEnd":""},{"resource":"2500kW-V1-跟网","task":"二阶段测试问题闭环","start":"2026-11-23","end":"2026-12-23","progress":0,"actualStart":"","actualEnd":""},{"resource":"2500kW-V1-跟网","task":"二阶段归档完成","start":"2026-12-23","end":"2026-12-30","progress":0,"actualStart":"","actualEnd":""},{"resource":"2500kW-V1-跟网","task":"二阶段发布/提单","start":"2026-12-30","end":"2026-12-30","progress":0,"actualStart":"","actualEnd":""},{"resource":"2500kW-V2-跟网","task":"一阶段测试完成","start":"2026-8-3","end":"2026-9-15","progress":95,"actualStart":"2026-8-3","actualEnd":"2026-9-18"},{"resource":"2500kW-V2-跟网","task":"一阶段测试问题闭环","start":"2026-9-15","end":"2026-9-20","progress":80,"actualStart":"2026-9-18","actualEnd":"2026-9-20"},{"resource":"2500kW-V2-跟网","task":"一阶段归档完成","start":"2026-9-20","end":"2026-9-30","progress":0,"actualStart":"","actualEnd":""},{"resource":"2500kW-V2-跟网","task":"一阶段发布/提单","start":"2026-9-30","end":"2026-9-30","progress":0,"actualStart":"","actualEnd":""},{"resource":"2500kW-V2-跟网","task":"板卡升级测试完成","start":"2026-9-30","end":"2026-9-30","progress":80,"actualStart":"2026-9-20","actualEnd":"2026-9-30"},{"resource":"2500kW-V2-跟网","task":"板卡升级测试问题闭环","start":"2026-9-30","end":"2026-10-15","progress":60,"actualStart":"","actualEnd":""},{"resource":"2500kW-V2-跟网","task":"板卡升级归档完成","start":"2026-10-15","end":"2026-10-30","progress":0,"actualStart":"","actualEnd":""},{"resource":"2500kW-V2-跟网","task":"板卡升级发布/提单","start":"2026-10-30","end":"2026-10-30","progress":null,"actualStart":"","actualEnd":""},{"resource":"2500kW-V2-跟网","task":"二阶段测试完成","start":"2026-10-30","end":"2026-11-23","progress":5,"actualStart":"2026-10-15","actualEnd":"2026-11-23"},{"resource":"2500kW-V2-跟网","task":"二阶段测试问题闭环","start":"2026-11-23","end":"2026-12-23","progress":null,"actualStart":"","actualEnd":""},{"resource":"2500kW-V2-跟网","task":"二阶段归档完成","start":"2026-12-23","end":"2026-12-30","progress":0,"actualStart":"","actualEnd":""},{"resource":"2500kW-V2-跟网","task":"二阶段发布/提单","start":"2026-12-30","end":"2026-12-30","progress":0,"actualStart":"","actualEnd":""},{"resource":"1250kW-V2-构网","task":"一阶段首台装配完成","start":"2026-8-3","end":"2026-9-15","progress":70,"actualStart":"2026-8-3","actualEnd":"2026-9-23"},{"resource":"1250kW-V2-构网","task":"一阶段归档完成","start":"2026-9-15","end":"2026-9-30","progress":0,"actualStart":"","actualEnd":""},{"resource":"1250kW-V2-构网","task":"一阶段发布/提单","start":"2026-9-15","end":"2026-9-30","progress":0,"actualStart":"","actualEnd":""},{"resource":"3450kW-V1-跟网","task":"批量归档完成","start":"2026-9-1","end":"2026-9-1","progress":100,"actualStart":"","actualEnd":""},{"resource":"3450kW-V1-跟网","task":"批量发布/提单","start":"2026-9-1","end":"2026-9-1","progress":100,"actualStart":"","actualEnd":""},{"resource":"3450kW-V1-跟网","task":"一阶段首台装配完成","start":"2026-9-2","end":"2026-9-15","progress":100,"actualStart":"2026-9-2","actualEnd":"2026-9-17"},{"resource":"3450kW-V1-跟网","task":"一阶段测试完成","start":"2026-9-15","end":"2026-9-25","progress":0,"actualStart":"2026-9-17","actualEnd":"2026-9-25"},{"resource":"3450kW-V1-跟网","task":"一阶段测试问题闭环","start":"2026-9-25","end":"2026-9-30","progress":0,"actualStart":"","actualEnd":""},{"resource":"3450kW-V1-跟网","task":"一阶段归档完成","start":"2026-9-30","end":"2026-10-15","progress":0,"actualStart":"","actualEnd":""},{"resource":"3450kW-V1-跟网","task":"一阶段发布/提单","start":"2026-10-15","end":"2026-10-30","progress":0,"actualStart":"","actualEnd":""},{"resource":"3450kW-V2-跟网","task":"一阶段首台装配完成","start":"2026-9-1","end":"2026-9-15","progress":100,"actualStart":"2026-9-1","actualEnd":"2026-9-17"},{"resource":"3450kW-V2-跟网","task":"一阶段测试完成","start":"2026-9-15","end":"2026-9-25","progress":0,"actualStart":"2026-9-17","actualEnd":"2026-9-25"},{"resource":"3450kW-V2-跟网","task":"一阶段测试问题闭环","start":"2026-9-25","end":"2026-9-30","progress":0,"actualStart":"","actualEnd":""},{"resource":"3450kW-V2-跟网","task":"一阶段归档完成","start":"2026-9-30","end":"2026-10-15","progress":0,"actualStart":"","actualEnd":""},{"resource":"3450kW-V2-跟网","task":"一阶段发布/提单","start":"2026-10-15","end":"2026-10-30","progress":0,"actualStart":"","actualEnd":""},{"resource":"3450kW-V2-跟网","task":"二阶段首台装配完成","start":"2026-10-30","end":"2026-11-4","progress":0,"actualStart":"","actualEnd":""},{"resource":"3450kW-V2-跟网","task":"二阶段测试完成","start":"2026-11-4","end":"2026-11-30","progress":0,"actualStart":"","actualEnd":""},{"resource":"3450kW-V2-跟网","task":"二阶段测试问题闭环","start":"2026-11-30","end":"2026-12-15","progress":0,"actualStart":"","actualEnd":""},{"resource":"3450kW-V2-跟网","task":"二阶段归档完成","start":"2026-12-15","end":"2026-12-30","progress":0,"actualStart":"","actualEnd":""},{"resource":"3450kW-V2-跟网","task":"二阶段发布/提单","start":"2026-12-30","end":"2027-1-30","progress":0,"actualStart":"","actualEnd":""},{"resource":"1750kW-V2-构网","task":"一阶段首台装配完成","start":"2026-7-13","end":"2026-9-15","progress":100,"actualStart":"2026-7-13","actualEnd":"2026-9-17"},{"resource":"1750kW-V2-构网","task":"一阶段测试完成","start":"2026-9-15","end":"2026-9-25","progress":5,"actualStart":"2026-9-17","actualEnd":"2026-10-12"},{"resource":"1750kW-V2-构网","task":"一阶段测试问题闭环","start":"2026-9-25","end":"2026-9-30","progress":0,"actualStart":"2026-10-12","actualEnd":"2026-10-12"},{"resource":"1750kW-V2-构网","task":"一阶段归档完成","start":"2026-9-30","end":"2026-10-15","progress":0,"actualStart":"2026-10-12","actualEnd":"2026-10-15"},{"resource":"1750kW-V2-构网","task":"一阶段发布/提单","start":"2026-10-15","end":"2026-10-30","progress":null,"actualStart":"","actualEnd":""},{"resource":"1000kW-V2","task":"一阶段首台装配完成","start":"2026-8-26","end":"2026-10-16","progress":30,"actualStart":"","actualEnd":""},{"resource":"1000kW-V2","task":"一阶段测试完成","start":"2026-10-16","end":"2026-10-30","progress":0,"actualStart":"2026-10-20","actualEnd":"2026-10-30"},{"resource":"1000kW-V2","task":"一阶段测试问题闭环","start":"2026-10-30","end":"2026-11-6","progress":0,"actualStart":"","actualEnd":""},{"resource":"1000kW-V2","task":"一阶段归档完成","start":"2026-11-6","end":"2026-11-13","progress":0,"actualStart":"","actualEnd":""},{"resource":"1000kW-V2","task":"一阶段发布/提单","start":"2026-11-13","end":"2026-11-13","progress":0,"actualStart":"","actualEnd":""}];
+var defaultData = [{"resource":"2500kW-V1-跟网","task":"一阶段测试问题闭环","start":"2026-9-15","end":"2026-9-20","progress":100,"actualStart":"","actualEnd":""},{"resource":"2500kW-V1-跟网","task":"一阶段归档完成","start":"2026-9-20","end":"2026-9-30","progress":80,"actualStart":"","actualEnd":""},{"resource":"2500kW-V1-跟网","task":"一阶段发布/提单","start":"2026-9-30","end":"2026-9-30","progress":50,"actualStart":"","actualEnd":""},{"resource":"2500kW-V1-跟网","task":"二阶段测试完成","start":"2026-9-30","end":"2026-12-1","progress":30,"actualStart":"","actualEnd":""},{"resource":"2500kW-V1-跟网","task":"二阶段测试问题闭环","start":"2026-12-1","end":"2026-12-16","progress":0,"actualStart":"","actualEnd":""},{"resource":"2500kW-V1-跟网","task":"二阶段归档完成","start":"2026-12-16","end":"2026-12-30","progress":0,"actualStart":"","actualEnd":""},{"resource":"2500kW-V1-跟网","task":"二阶段发布/提单","start":"2026-12-30","end":"2026-12-30","progress":0,"actualStart":"","actualEnd":""},{"resource":"2500kW-V2-跟网","task":"批量测试问题闭环","start":"2026-9-15","end":"2026-9-20","progress":100,"actualStart":"","actualEnd":""},{"resource":"2500kW-V2-跟网","task":"批量归档完成","start":"2026-9-20","end":"2026-9-30","progress":100,"actualStart":"","actualEnd":""},{"resource":"2500kW-V2-跟网","task":"批量发布/提单","start":"2026-9-30","end":"2026-9-30","progress":80,"actualStart":"","actualEnd":""},{"resource":"2500kW-V2-跟网","task":"一阶段测试完成","start":"2026-9-30","end":"2026-9-30","progress":60,"actualStart":"","actualEnd":""},{"resource":"2500kW-V2-跟网","task":"一阶段测试问题闭环","start":"2026-9-30","end":"2026-10-15","progress":30,"actualStart":"","actualEnd":""},{"resource":"2500kW-V2-跟网","task":"一阶段归档完成","start":"2026-10-15","end":"2026-10-30","progress":0,"actualStart":"","actualEnd":""},{"resource":"2500kW-V2-跟网","task":"一阶段发布/提单","start":"2026-10-30","end":"2026-10-30","progress":0,"actualStart":"","actualEnd":""},{"resource":"2500kW-V2-跟网","task":"二阶段测试完成","start":"2026-10-30","end":"2026-12-1","progress":0,"actualStart":"","actualEnd":""},{"resource":"2500kW-V2-跟网","task":"二阶段测试问题闭环","start":"2026-12-1","end":"2026-12-16","progress":0,"actualStart":"","actualEnd":""},{"resource":"2500kW-V2-跟网","task":"二阶段归档完成","start":"2026-12-16","end":"2026-12-30","progress":0,"actualStart":"","actualEnd":""},{"resource":"2500kW-V2-跟网","task":"二阶段发布/提单","start":"2026-12-30","end":"2026-12-30","progress":0,"actualStart":"","actualEnd":""},{"resource":"1250kW-V2-构网","task":"一阶段测试完成","start":"2026-9-15","end":"2026-9-20","progress":100,"actualStart":"","actualEnd":""},{"resource":"1250kW-V2-构网","task":"一阶段测试问题闭环","start":"2026-9-20","end":"2026-9-30","progress":70,"actualStart":"","actualEnd":""},{"resource":"1250kW-V2-构网","task":"一阶段归档完成","start":"2026-9-30","end":"2026-10-15","progress":40,"actualStart":"","actualEnd":""},{"resource":"1250kW-V2-构网","task":"一阶段发布/提单","start":"2026-10-15","end":"2026-10-15","progress":0,"actualStart":"","actualEnd":""},{"resource":"3450kW-V1-跟网","task":"批量归档完成","start":"2026-9-1","end":"2026-9-5","progress":100,"actualStart":"","actualEnd":""},{"resource":"3450kW-V1-跟网","task":"批量发布/提单","start":"2026-9-5","end":"2026-9-5","progress":100,"actualStart":"","actualEnd":""},{"resource":"3450kW-V1-跟网","task":"一阶段首台装配完成","start":"2026-9-5","end":"2026-9-15","progress":100,"actualStart":"","actualEnd":""},{"resource":"3450kW-V1-跟网","task":"一阶段测试完成","start":"2026-9-15","end":"2026-9-25","progress":100,"actualStart":"","actualEnd":""},{"resource":"3450kW-V1-跟网","task":"一阶段测试问题闭环","start":"2026-9-25","end":"2026-9-30","progress":90,"actualStart":"","actualEnd":""},{"resource":"3450kW-V1-跟网","task":"一阶段归档完成","start":"2026-9-30","end":"2026-10-15","progress":60,"actualStart":"","actualEnd":""},{"resource":"3450kW-V1-跟网","task":"一阶段发布/提单","start":"2026-10-15","end":"2026-10-30","progress":0,"actualStart":"","actualEnd":""},{"resource":"3450kW-V2-跟网","task":"一阶段首台装配完成","start":"2026-7-13","end":"2026-9-15","progress":100,"actualStart":"","actualEnd":""},{"resource":"3450kW-V2-跟网","task":"一阶段测试完成","start":"2026-9-15","end":"2026-9-25","progress":100,"actualStart":"","actualEnd":""},{"resource":"3450kW-V2-跟网","task":"一阶段测试问题闭环","start":"2026-9-25","end":"2026-9-30","progress":80,"actualStart":"","actualEnd":""},{"resource":"3450kW-V2-跟网","task":"一阶段归档完成","start":"2026-9-30","end":"2026-10-15","progress":50,"actualStart":"","actualEnd":""},{"resource":"3450kW-V2-跟网","task":"一阶段发布/提单","start":"2026-10-15","end":"2026-10-30","progress":0,"actualStart":"","actualEnd":""},{"resource":"3450kW-V2-跟网","task":"二阶段首台装配完成","start":"2026-10-30","end":"2026-11-4","progress":0,"actualStart":"","actualEnd":""},{"resource":"3450kW-V2-跟网","task":"二阶段测试完成","start":"2026-11-4","end":"2026-11-30","progress":0,"actualStart":"","actualEnd":""},{"resource":"3450kW-V2-跟网","task":"二阶段测试问题闭环","start":"2026-11-30","end":"2026-12-15","progress":0,"actualStart":"","actualEnd":""},{"resource":"3450kW-V2-跟网","task":"二阶段归档完成","start":"2026-12-15","end":"2026-12-30","progress":0,"actualStart":"","actualEnd":""},{"resource":"3450kW-V2-跟网","task":"二阶段发布/提单","start":"2026-12-30","end":"2027-1-30","progress":0,"actualStart":"","actualEnd":""},{"resource":"1750kW-V2-构网","task":"一阶段首台装配完成","start":"2026-7-13","end":"2026-9-15","progress":100,"actualStart":"","actualEnd":""},{"resource":"1750kW-V2-构网","task":"一阶段测试完成","start":"2026-9-15","end":"2026-9-25","progress":100,"actualStart":"","actualEnd":""},{"resource":"1750kW-V2-构网","task":"一阶段测试问题闭环","start":"2026-9-25","end":"2026-9-30","progress":75,"actualStart":"","actualEnd":""},{"resource":"1750kW-V2-构网","task":"一阶段归档完成","start":"2026-9-30","end":"2026-10-15","progress":40,"actualStart":"","actualEnd":""},{"resource":"1750kW-V2-构网","task":"一阶段发布/提单","start":"2026-10-15","end":"2026-10-30","progress":0,"actualStart":"","actualEnd":""},{"resource":"1000kW-V2","task":"一阶段首台装配完成","start":"2026-8-26","end":"2026-10-16","progress":100,"actualStart":"2026-8-28","actualEnd":"2026-10-20"},{"resource":"1000kW-V2","task":"一阶段测试完成","start":"2026-10-16","end":"2026-10-30","progress":60,"actualStart":"2026-10-20","actualEnd":"2026-11-2"},{"resource":"1000kW-V2","task":"一阶段测试问题闭环","start":"2026-10-30","end":"2026-11-6","progress":20,"actualStart":"2026-11-2","actualEnd":"2026-11-9"},{"resource":"1000kW-V2","task":"一阶段归档完成","start":"2026-11-6","end":"2026-11-13","progress":0,"actualStart":"","actualEnd":""},{"resource":"1000kW-V2","task":"一阶段发布/提单","start":"2026-11-13","end":"2026-11-13","progress":0,"actualStart":"","actualEnd":""}];
 
 // ===== v2 配色方案:按 4 级深浅表示阶段步骤 =====
 // 步骤深度判定:
@@ -436,20 +482,43 @@ function exportCSV() {
   var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'gantt_v3_data.csv'; a.click();
 }
 
+// 自动识别 CSV 编码:BOM 优先 → 严格 UTF-8 试解 → 失败回退 GBK(中文 Windows Excel 默认)
+function decodeCSVBuffer(buf) {
+  var b = new Uint8Array(buf);
+  if (b.length >= 3 && b[0] === 0xEF && b[1] === 0xBB && b[2] === 0xBF) {
+    return new TextDecoder('utf-8').decode(b.subarray(3));          // UTF-8 BOM
+  }
+  if (b.length >= 2 && b[0] === 0xFF && b[1] === 0xFE) {
+    return new TextDecoder('utf-16le').decode(b.subarray(2));       // UTF-16 LE
+  }
+  if (b.length >= 2 && b[0] === 0xFE && b[1] === 0xFF) {
+    return new TextDecoder('utf-16be').decode(b.subarray(2));       // UTF-16 BE
+  }
+  try {
+    return new TextDecoder('utf-8', { fatal: true }).decode(b);     // 无 BOM,先严格按 UTF-8
+  } catch (e) {
+    return new TextDecoder('gbk').decode(b);                        // 非合法 UTF-8 → GBK
+  }
+}
+
+// 统一导入:同一个 CSV 一次同时刷新甘特图 + 各阶段版本改进表
 function importCSV(e) {
   var f = e.target.files[0]; if (!f) return;
-  var readAs = function(enc, cb) {
-    var r = new FileReader();
-    r.onload = function() { cb(r.result); };
-    r.readAsText(f, enc);
-  };
-  readAs('UTF-8', function(text) {
-    if (text.indexOf('\ufffd') !== -1) {
-      readAs('GBK', parseAndApplyCSV);
-    } else {
-      parseAndApplyCSV(text);
+  var r = new FileReader();
+  r.onload = function() {
+    var text;
+    try {
+      text = decodeCSVBuffer(r.result);
+    } catch (err) {
+      alert('文件编码识别失败: ' + err.message);
+      return;
     }
-  });
+    // 甘特图(原有逻辑,含成功提示)
+    try { parseAndApplyCSV(text); } catch (err) { alert('甘特图数据解析失败: ' + err.message); }
+    // 改进表(静默:无改进列/无数据时不弹窗、不清空已有数据)
+    try { parseImproveCSV(text, true); } catch (err) { console.warn('改进表解析失败', err); }
+  };
+  r.readAsArrayBuffer(f);
   e.target.value = '';
 }
 
@@ -992,7 +1061,249 @@ function renderLegend(stages) {
 window.addEventListener('resize', function() { if (chart) chart.resize(); });
 
 refreshChart();
+
+// ====================================================================
+// ===== 改进表模块(与上方甘特图完全独立,互不影响) =====
+// 数据结构: { machine, stage, owner, improvement }
+// 存储: localStorage key = 'improvements_v1_data'
+// 导入: .xlsx 读第 2 个 sheet / .csv 整文件
+// ====================================================================
+var IMPROVE_KEY = 'improvements_v1_data';
+var improveData = [];
+
+function loadImprovements() {
+  try {
+    var s = localStorage.getItem(IMPROVE_KEY);
+    improveData = s ? JSON.parse(s) : [];
+    if (!Array.isArray(improveData)) improveData = [];
+  } catch(e) { improveData = []; }
+  // 自动清理:丢掉无阶段的空行,同"机型+阶段"合并为一行(兼容旧版本导入的数据)
+  var cleaned = normalizeImproveData(improveData);
+  if (cleaned.length !== improveData.length) {
+    improveData = cleaned;
+    saveImprovements();
+  } else {
+    improveData = cleaned;
+  }
+}
+
+// 按"机型+阶段"聚合:空阶段行丢弃;同键责任人取首个非空;改进去重用"；"拼接
+function normalizeImproveData(arr) {
+  var map = {}, order = [];
+  for (var i = 0; i < arr.length; i++) {
+    var r = arr[i] || {};
+    var machine = String(r.machine == null ? '' : r.machine).trim();
+    var stage = String(r.stage == null ? '' : r.stage).trim();
+    if (!stage) continue;
+    var owner = String(r.owner == null ? '' : r.owner).trim();
+    var imp = String(r.improvement == null ? '' : r.improvement).trim();
+    var key = machine + '||' + stage;
+    if (map[key] == null) {
+      map[key] = { machine: machine, stage: stage, owner: owner, imps: [] };
+      order.push(key);
+    }
+    var a = map[key];
+    if (!a.owner && owner) a.owner = owner;
+    if (imp && a.imps.indexOf(imp) < 0) a.imps.push(imp);
+  }
+  return order.map(function(k) {
+    var a = map[k];
+    return { machine: a.machine, stage: a.stage, owner: a.owner, improvement: a.imps.join('；') };
+  });
+}
+function saveImprovements() { localStorage.setItem(IMPROVE_KEY, JSON.stringify(improveData)); }
+
+function renderImprovementsTable() {
+  var tbody = document.getElementById('improveBody');
+  var empty = document.getElementById('improveEmpty');
+  if (!tbody) return;
+  tbody.innerHTML = '';
+  if (improveData.length === 0) {
+    empty.style.display = 'block';
+    return;
+  }
+  empty.style.display = 'none';
+  for (var i = 0; i < improveData.length; i++) {
+    var r = improveData[i] || {};
+    var tr = document.createElement('tr');
+    tr.innerHTML =
+      '<td><textarea data-i="' + i + '" data-k="machine">' + esc(r.machine || '') + '</textarea></td>' +
+      '<td><textarea data-i="' + i + '" data-k="stage">' + esc(r.stage || '') + '</textarea></td>' +
+      '<td><textarea data-i="' + i + '" data-k="owner">' + esc(r.owner || '') + '</textarea></td>' +
+      '<td><textarea data-i="' + i + '" data-k="improvement" rows="2">' + esc(r.improvement || '') + '</textarea></td>';
+    tbody.appendChild(tr);
+  }
+  // 绑定编辑事件
+  tbody.querySelectorAll('textarea').forEach(function(el) {
+    el.addEventListener('change', function() {
+      var idx = parseInt(el.getAttribute('data-i'), 10);
+      var key = el.getAttribute('data-k');
+      if (improveData[idx]) {
+        improveData[idx][key] = el.value;
+        saveImprovements();
+      }
+    });
+  });
+}
+function esc(s) {
+  return String(s == null ? '' : s)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+function addImproveRow() {
+  improveData.push({ machine: '', stage: '', owner: '', improvement: '' });
+  saveImprovements();
+  renderImprovementsTable();
+  // 滚动到底部并聚焦新行第一列
+  var wrap = document.getElementById('improveTableWrap');
+  wrap.scrollTop = wrap.scrollHeight;
+  var body = document.getElementById('improveBody');
+  var firstTA = body.querySelector('tr:last-child textarea');
+  if (firstTA) firstTA.focus();
+}
+
+function delImproveRow(i) {
+  improveData.splice(i, 1);
+  saveImprovements();
+  renderImprovementsTable();
+}
+
+function clearImprovements() {
+  if (!confirm('确定清空说明表所有数据吗？')) return;
+  improveData = [];
+  saveImprovements();
+  renderImprovementsTable();
+}
+
+// 列识别:与甘特图同CSV时 machine 固定A列(0),stage/owner/improvement 按表头关键字识别
+function findImproveCol(cols, re) {
+  for (var i = 0; i < cols.length; i++) if (re.test(cols[i])) return i;
+  return -1;
+}
+function mapImproveCols(header) {
+  var idx = {
+    machine: 0,   // 固定A列(资源=机型)
+    type: -1,     // 类型列(计划/实际),有则过滤实际行
+    stage: -1,
+    owner: -1,
+    improvement: -1
+  };
+  // 识别"类型"列(用于过滤实际行)
+  idx.type = findImproveCol(header, /^类型$|^type$|^计划\s*\/\s*实际$/i);
+  // stage/owner/improvement:先匹配"改进"前缀,再匹配无前缀
+  idx.stage = findImproveCol(header, /^改进阶段|改进.*阶段|阶段|stage/i);
+  idx.owner = findImproveCol(header, /责任人|负责人|负责|owner/i);
+  idx.improvement = findImproveCol(header, /^改进|^说明|改进措施|改进.*描述|说明.*描述|improvement|action|remark|note/i);
+  // 兜底:按列位置(甘特图CSV里 H=7, I=8, J=9)
+  if (idx.stage < 0) idx.stage = 7;
+  if (idx.owner < 0) idx.owner = 8;
+  if (idx.improvement < 0) idx.improvement = 9;
+  return idx;
+}
+
+// 把二维数组(第 0 行为表头)转换为改进表数据
+// silent=true(统一导入时):无数据不弹窗、不清空已有数据;有数据也不弹成功提示
+function applyImprovementsRows(rows, silent) {
+  if (!rows || rows.length < 2) {
+    if (!silent) alert('未识别到数据行（仅有表头或为空）');
+    return false;
+  }
+  var header = rows[0].map(function(s){ return String(s == null ? '' : s).trim(); });
+  var idx = mapImproveCols(header);
+  // 按 "机型||阶段" 聚合:每个机型每个阶段只保留一行
+  var aggMap = {};
+  var aggOrder = [];
+  var skippedActual = 0, skippedNoStage = 0;
+  for (var i = 1; i < rows.length; i++) {
+    var r = rows[i] || [];
+    // 有 type 列时:只取含"计划"的行,跳过"实际"行
+    if (idx.type >= 0) {
+      var typeVal = (r[idx.type] != null ? String(r[idx.type]) : '').trim();
+      if (/实|actual/i.test(typeVal)) { skippedActual++; continue; }
+      // 空 type 也跳过(可能是表头分隔行)
+      if (!typeVal) { continue; }
+    }
+    var machine = (r[idx.machine] != null ? String(r[idx.machine]) : '').trim();
+    var stage = (r[idx.stage] != null ? String(r[idx.stage]) : '').trim();
+    var owner = (r[idx.owner] != null ? String(r[idx.owner]) : '').trim();
+    var improvement = (r[idx.improvement] != null ? String(r[idx.improvement]) : '').trim();
+    // 阶段为空的行跳过(甘特图CSV里阶段只在该阶段首个任务行填写,其余任务行无意义)
+    if (!stage) { skippedNoStage++; continue; }
+    var key = machine + '||' + stage;
+    if (aggMap[key] == null) {
+      aggMap[key] = { machine: machine, stage: stage, owner: owner, improvements: [] };
+      aggOrder.push(key);
+    }
+    var agg = aggMap[key];
+    if (!agg.owner && owner) agg.owner = owner;       // 责任人取第一个非空
+    if (improvement && agg.improvements.indexOf(improvement) < 0) {
+      agg.improvements.push(improvement);             // 多条改进去重后合并
+    }
+  }
+  var newData = aggOrder.map(function(k) {
+    var a = aggMap[k];
+    return { machine: a.machine, stage: a.stage, owner: a.owner, improvement: a.improvements.join('；') };
+  });
+  if (newData.length === 0) {
+    // 静默模式:文件里没有改进数据,保留表里现有内容,什么都不做
+    if (!silent) alert('未识别到有效数据行！(已跳过 ' + skippedActual + ' 行实际行、' + skippedNoStage + ' 行无阶段行)');
+    return false;
+  }
+  improveData = newData;
+  saveImprovements();
+  renderImprovementsTable();
+  if (!silent) {
+    var msg = '✓ 已导入 ' + newData.length + ' 条说明记录';
+    if (skippedActual) msg += '(跳过 ' + skippedActual + ' 行实际行)';
+    alert(msg);
+  }
+  return true;
+}
+
+// CSV 解析(简易:支持逗号/分号/Tab 分隔)
+function parseImproveCSV(text, silent) {
+  // 兼容 UTF-8 BOM
+  text = text.replace(/^\ufeff/, '');
+  var lines = text.replace(/\r\n/g, '\n').replace(/\r/g, '\n').split('\n').filter(function(l){ return l.trim(); });
+  if (lines.length < 2) {
+    if (!silent) alert('CSV 内容不足 2 行');
+    return;
+  }
+  // 自动判断分隔符:逗号 / 分号 / 制表符
+  var delim = ',';
+  var sample = lines[0];
+  if ((sample.match(/\t/g) || []).length > (sample.match(/,/g) || []).length) delim = '\t';
+  else if ((sample.match(/;/g) || []).length > (sample.match(/,/g) || []).length) delim = ';';
+  var rows = lines.map(function(l){ return l.split(delim); });
+  applyImprovementsRows(rows, silent);
+}
+
+function exportImprovements() {
+  if (improveData.length === 0) { alert('说明表为空'); return; }
+  var csv = '\ufeff机型,阶段,责任人,说明\n';
+  for (var i = 0; i < improveData.length; i++) {
+    var r = improveData[i] || {};
+    // CSV 字段内逗号/换行/引号转义
+    function q(s) {
+      s = String(s == null ? '' : s);
+      if (/[",\n\r]/.test(s)) s = '"' + s.replace(/"/g, '""') + '"';
+      return s;
+    }
+    csv += q(r.machine) + ',' + q(r.stage) + ',' + q(r.owner) + ',' + q(r.improvement) + '\n';
+  }
+  var blob = new Blob([csv], {type:'text/csv'});
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'improvements_' + new Date().toISOString().slice(0,10) + '.csv';
+  a.click();
+}
+
+// 初始化改进表(独立于甘特图)
+loadImprovements();
+renderImprovementsTable();
+
 </script>
 
 
-<div style="position: fixed; right: 6px; bottom: 3px; font-size: 10px; color: rgb(200, 201, 204); z-index: 99999; pointer-events: none;">v20260918v3e</div></body></html>
+<div style="position: fixed; right: 6px; bottom: 3px; font-size: 10px; color: rgb(200, 201, 204); z-index: 99999; pointer-events: none;">v20260924v4a</div></body></html>
