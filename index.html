@@ -8,7 +8,7 @@
  * 机制:页面打开后以 no-store 方式拉取服务器最新HTML,比对 BUILD_ID,
  *       发现新版就自动跳转到带 ?build=新号 的URL(缓存键不同,强制加载新版)。
  * 用法:每次「导出HTML并上传GitHub」前,把 BUILD_ID 改成新值(建议 当天日期+序号)。 */
-var BUILD_ID = '20261015v9';
+var BUILD_ID = '20261016v1';
 (function () {
   try {
     var DONE_KEY = 'gantt_build_done';
@@ -193,19 +193,19 @@ var BUILD_ID = '20261015v9';
 
   <div class="tabs" id="tabs">
     <div class="tab" data-mode="overview">📊 全局概览</div>
-    <div class="tab active" data-mode="d2500">2500KW详情</div>
-    <div class="tab" data-mode="d3450">3450KW详情</div>
-    <button id="backBtn" style="margin-left: 14px; font-size: 12px; padding: 2px 10px; cursor: pointer; display: none;">← 返回 2500KW 机型列表</button>
+    <div class="tab" data-mode="d2500">2500KW详情</div>
+    <div class="tab active" data-mode="d3450">3450KW详情</div>
+    <button id="backBtn" style="margin-left: 14px; font-size: 12px; padding: 2px 10px; cursor: pointer;">← 返回 3450KW 机型列表</button>
   </div>
 
-  <div id="pageTitle" class="page-title" style="display: none;"><span class="page-title-machine">1250kW-V2-构网</span> <span class="page-title-sub">各阶段进度与升级点</span></div>
+  <div id="pageTitle" class="page-title" style=""><span class="page-title-machine">3450kW-V2-跟网</span> <span class="page-title-sub">各阶段进度与升级点</span></div>
 
   <div class="chart-box" style="position:relative">
-    <div id="yLabels" style="top: 20px; left: 20px; width: 125px; height: 343px; display: block;"><div class="y-label-row" style="position: absolute; left: 0px; right: 0px; height: 24px; top: 30px; font-weight: bold;"><a href="javascript:void(0)" title="点击查看该机型各阶段进度" style="cursor: pointer; text-decoration: none; color: rgb(31, 120, 180); border-bottom: 1px dashed rgb(31, 120, 180);">2500kW-V1-跟网</a></div><div class="y-label-row y-label-actual" style="position: absolute; left: 0px; right: 0px; height: 24px; top: 62px;">实际</div><div class="y-label-row" style="position: absolute; left: 0px; right: 0px; height: 24px; top: 126px; font-weight: bold;"><a href="javascript:void(0)" title="点击查看该机型各阶段进度" style="cursor: pointer; text-decoration: none; color: rgb(31, 120, 180); border-bottom: 1px dashed rgb(31, 120, 180);">2500kW-V2-跟网</a></div><div class="y-label-row y-label-actual" style="position: absolute; left: 0px; right: 0px; height: 24px; top: 158px;">实际</div><div class="y-label-row" style="position: absolute; left: 0px; right: 0px; height: 24px; top: 222px; font-weight: bold;"><a href="javascript:void(0)" title="点击查看该机型各阶段进度" style="cursor: pointer; text-decoration: none; color: rgb(31, 120, 180); border-bottom: 1px dashed rgb(31, 120, 180);">1250kW-V2-构网</a></div><div class="y-label-row y-label-actual" style="position: absolute; left: 0px; right: 0px; height: 24px; top: 254px;">实际</div></div>
-    <div id="chartWrap" style="height: 363px; margin-left: 150px;">
-      <div id="chart" _echarts_instance_="ec_1792114107465" style="height: 343px; width: 1400px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); position: relative;"><div style="position: relative; width: 1400px; height: 343px; padding: 0px; margin: 0px; border-width: 0px; cursor: pointer;"><canvas data-zr-dom-id="zr_0" width="1595" height="391" style="position: absolute; left: 0px; top: 0px; width: 1400px; height: 343px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;"></canvas><canvas data-zr-dom-id="zr_100000" width="1595" height="391" style="position: absolute; left: 0px; top: 0px; width: 1400px; height: 343px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;"></canvas></div><div class="" style="position: absolute; display: block; border-style: solid; white-space: nowrap; z-index: 9999999; box-shadow: rgba(0, 0, 0, 0.2) 1px 2px 10px; transition: opacity 0.2s cubic-bezier(0.23, 1, 0.32, 1), visibility 0.2s cubic-bezier(0.23, 1, 0.32, 1), transform 0.4s cubic-bezier(0.23, 1, 0.32, 1); background-color: rgb(255, 255, 255); border-width: 1px; border-radius: 4px; color: rgb(102, 102, 102); font: 14px / 21px &quot;Microsoft YaHei&quot;; padding: 10px; top: 0px; left: 0px; transform: translate3d(725px, 193px, 0px); border-color: rgb(156, 107, 0); pointer-events: none; visibility: hidden; opacity: 0;"><b>2500kW-V2-跟网</b><br><span style="display:inline-block;margin-right:4px;border-radius:10px;width:10px;height:10px;background-color:#9C6B00;"></span> 一阶段发布/提单<br>计划：2026-9-30 ~ 2026-9-30<br>实际：2026-9-30 ~ 2026-10-30，完成 50%<br><span style="color:#F5222D;font-weight:bold">⚠ 延期 30 天</span>(实际结束晚于计划结束)</div></div>
+    <div id="yLabels" style="top: 20px; left: 20px; width: 260px; height: 415px; display: block;"><div class="y-label-row" style="position: absolute; left: 0px; right: 0px; top: 30px; height: 56px; flex-direction: column; align-items: flex-start; justify-content: center;"><div style="font-weight:bold;font-size:13px;color:#303133;line-height:18px;"><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#F7BE43;margin-right:5px;vertical-align:middle;"></span>一阶段降本</div><div style="font-size:11px;color:#666;line-height:15px;margin-top:3px;margin-left:15px;">升级点：基于主回路器件二供平替物料的降本</div></div><div class="y-label-row" style="position: absolute; left: 0px; right: 0px; top: 150px; height: 56px; flex-direction: column; align-items: flex-start; justify-content: center;"><div style="font-weight:bold;font-size:13px;color:#303133;line-height:18px;"><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#F1775F;margin-right:5px;vertical-align:middle;"></span>二阶段降本</div><div style="font-size:11px;color:#666;line-height:15px;margin-top:3px;margin-left:15px;">升级点：基于结构设计改动的降本</div></div><div class="y-label-row" style="position: absolute; left: 0px; right: 0px; top: 270px; height: 56px; flex-direction: column; align-items: flex-start; justify-content: center;"><div style="font-weight:bold;font-size:13px;color:#303133;line-height:18px;"><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#2EC4B6;margin-right:5px;vertical-align:middle;"></span>热虹吸</div><div style="font-size:11px;color:#666;line-height:15px;margin-top:3px;margin-left:15px;">升级点：基于相变技术引入的降本(热虹吸散热器)</div></div></div>
+    <div id="chartWrap" style="height: 435px; margin-left: 280px;">
+      <div id="chart" _echarts_instance_="ec_1792115059463" style="height: 415px; width: 1664px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); position: relative;"><div style="position: relative; width: 1664px; height: 415px; padding: 0px; margin: 0px; border-width: 0px; cursor: default;"><canvas data-zr-dom-id="zr_0" width="1896" height="473" style="position: absolute; left: 0px; top: 0px; width: 1664px; height: 415px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;"></canvas><canvas data-zr-dom-id="zr_100000" width="1896" height="473" style="position: absolute; left: 0px; top: 0px; width: 1664px; height: 415px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;"></canvas></div><div class="" style="position: absolute; display: block; border-style: solid; white-space: nowrap; z-index: 9999999; box-shadow: rgba(0, 0, 0, 0.2) 1px 2px 10px; transition: opacity 0.2s cubic-bezier(0.23, 1, 0.32, 1), visibility 0.2s cubic-bezier(0.23, 1, 0.32, 1); background-color: rgb(255, 255, 255); border-width: 1px; border-radius: 4px; color: rgb(102, 102, 102); font: 14px / 21px &quot;Microsoft YaHei&quot;; padding: 10px; top: 0px; left: 0px; transform: translate3d(814px, 61px, 0px); border-color: rgb(156, 107, 0); pointer-events: none; visibility: hidden; opacity: 0;"><b>3450kW-V2-跟网</b><br><span style="display:inline-block;margin-right:4px;border-radius:10px;width:10px;height:10px;background-color:#9C6B00;"></span> 一阶段归档完成<br>计划：2026-9-30 ~ 2026-10-15 (16天)</div></div>
     </div>
-    <div id="legendBox"><div class="legend-group"><div class="legend-group-title">一阶段降本</div><div class="legend-depth-row"><span class="legend-depth-swatch" style="background:#FCDD7A"></span><span>首台装配完成</span></div><div class="legend-depth-row"><span class="legend-depth-swatch" style="background:#F7BE43"></span><span>测试完成</span></div><div class="legend-depth-row"><span class="legend-depth-swatch" style="background:#E69508"></span><span>测试问题闭环</span></div><div class="legend-depth-row"><span class="legend-depth-swatch" style="background:#9C6B00"></span><span>归档完成/发布提单</span></div></div><div class="legend-group"><div class="legend-group-title">二阶段降本</div><div class="legend-depth-row"><span class="legend-depth-swatch" style="background:#FAA996"></span><span>首台装配完成</span></div><div class="legend-depth-row"><span class="legend-depth-swatch" style="background:#F1775F"></span><span>测试完成</span></div><div class="legend-depth-row"><span class="legend-depth-swatch" style="background:#D62412"></span><span>测试问题闭环</span></div><div class="legend-depth-row"><span class="legend-depth-swatch" style="background:#8C0F0A"></span><span>归档完成/发布提单</span></div></div><div class="legend-group"><div class="legend-group-title">板卡升级</div><div class="legend-depth-row"><span class="legend-depth-swatch" style="background:#A0E7E5"></span><span>首台装配完成</span></div><div class="legend-depth-row"><span class="legend-depth-swatch" style="background:#2EC4B6"></span><span>测试完成</span></div><div class="legend-depth-row"><span class="legend-depth-swatch" style="background:#0891A8"></span><span>测试问题闭环</span></div><div class="legend-depth-row"><span class="legend-depth-swatch" style="background:#05666A"></span><span>归档完成/发布提单</span></div></div><div class="legend-group"><div class="legend-group-title">延期标记</div><div class="legend-depth-row"><span>①实际结束晚于计划 ≥ 7 天;或②今天已超计划结束 ≥ 7 天且未 100%</span></div></div></div>
+    <div id="legendBox"><div class="legend-group"><div class="legend-group-title">一阶段降本</div><div class="legend-depth-row"><span class="legend-depth-swatch" style="background:#FCDD7A"></span><span>首台装配完成</span></div><div class="legend-depth-row"><span class="legend-depth-swatch" style="background:#F7BE43"></span><span>测试完成</span></div><div class="legend-depth-row"><span class="legend-depth-swatch" style="background:#E69508"></span><span>测试问题闭环</span></div><div class="legend-depth-row"><span class="legend-depth-swatch" style="background:#9C6B00"></span><span>归档完成/发布提单</span></div></div><div class="legend-group"><div class="legend-group-title">二阶段降本</div><div class="legend-depth-row"><span class="legend-depth-swatch" style="background:#FAA996"></span><span>首台装配完成</span></div><div class="legend-depth-row"><span class="legend-depth-swatch" style="background:#F1775F"></span><span>测试完成</span></div><div class="legend-depth-row"><span class="legend-depth-swatch" style="background:#D62412"></span><span>测试问题闭环</span></div><div class="legend-depth-row"><span class="legend-depth-swatch" style="background:#8C0F0A"></span><span>归档完成/发布提单</span></div></div><div class="legend-group"><div class="legend-group-title">热虹吸</div><div class="legend-depth-row"><span class="legend-depth-swatch" style="background:#A0E7E5"></span><span>首台装配完成</span></div><div class="legend-depth-row"><span class="legend-depth-swatch" style="background:#2EC4B6"></span><span>测试完成</span></div><div class="legend-depth-row"><span class="legend-depth-swatch" style="background:#0891A8"></span><span>测试问题闭环</span></div><div class="legend-depth-row"><span class="legend-depth-swatch" style="background:#05666A"></span><span>归档完成/发布提单</span></div></div><div class="legend-group"><div class="legend-group-title">延期标记</div><div class="legend-depth-row"><span>①实际结束晚于计划 ≥ 7 天;或②今天已超计划结束 ≥ 7 天且未 100%</span></div></div></div>
     <div id="err" style="display: none;"></div>
   </div>
 
@@ -1549,8 +1549,9 @@ function refreshChart() {
               return ot ? shortDateRange(ot.start, ot.end) : '';
             }
             var v = arr[params.dataIndex];
-            if (v === null || v === undefined) return '';  // 空=不标百分比
-            return delayedArr[params.dataIndex] ? (v + '% (延期)') : (v + '%');
+            if (v === null || v === undefined) return '';  // 无进度=不画条(labelBand 也不标)
+            // v9: 详情页条块不再显示百分比数字, 只标"延期"(进度仍作显示判据)
+            return delayedArr[params.dataIndex] ? '延期' : '';
           };
         })(actualProgressArr, actualDelayedArr, labelBand, actualTasks),
         fontSize: 11, fontWeight: 'bold'
@@ -2090,4 +2091,38 @@ function parseImproveCSV(text, silent) {
   }
   // 自动判断分隔符:逗号 / 分号 / 制表符
   var delim = ',';
-  var sample = lines[
+  var sample = lines[0];
+  if ((sample.match(/\t/g) || []).length > (sample.match(/,/g) || []).length) delim = '\t';
+  else if ((sample.match(/;/g) || []).length > (sample.match(/,/g) || []).length) delim = ';';
+  var rows = lines.map(function(l){ return l.split(delim); });
+  applyImprovementsRows(rows, silent);
+}
+
+function exportImprovements() {
+  if (improveData.length === 0) { alert('说明表为空'); return; }
+  var csv = '\ufeff机型,阶段,责任人,说明\n';
+  for (var i = 0; i < improveData.length; i++) {
+    var r = improveData[i] || {};
+    // CSV 字段内逗号/换行/引号转义
+    function q(s) {
+      s = String(s == null ? '' : s);
+      if (/[",\n\r]/.test(s)) s = '"' + s.replace(/"/g, '""') + '"';
+      return s;
+    }
+    csv += q(r.machine) + ',' + q(r.stage) + ',' + q(r.owner) + ',' + q(r.improvement) + '\n';
+  }
+  var blob = new Blob([csv], {type:'text/csv'});
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'improvements_' + new Date().toISOString().slice(0,10) + '.csv';
+  a.click();
+}
+
+// 初始化改进表(独立于甘特图)
+loadImprovements();
+renderImprovementsTable();
+
+</script>
+
+
+<div style="position: fixed; right: 6px; bottom: 3px; font-size: 10px; color: rgb(200, 201, 204); z-index: 99999; pointer-events: none;">v20260924v4a</div><div style="position: fixed; right: 6px; bottom: 3px; font-size: 10px; color: rgb(200, 201, 204); z-index: 99999; pointer-events: none;">v20261014v2</div><div style="position: fixed; right: 6px; bottom: 3px; font-size: 10px; color: rgb(200, 201, 204); z-index: 99999; pointer-events: none;">v20261015v1</div><div style="position: fixed; right: 6px; bottom: 3px; font-size: 10px; color: rgb(200, 201, 204); z-index: 99999; pointer-events: none;">v20261015v8</div><div style="position: fixed; right: 6px; bottom: 3px; font-size: 10px; color: rgb(200, 201, 204); z-index: 99999; pointer-events: none;">v20261015v8</div><div style="position: fixed; right: 6px; bottom: 3px; font-size: 10px; color: rgb(200, 201, 204); z-index: 99999; pointer-events: none;">v20261016v1</div></body></html>
