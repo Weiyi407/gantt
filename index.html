@@ -8,7 +8,7 @@
  * 机制:页面打开后以 no-store 方式拉取服务器最新HTML,比对 BUILD_ID,
  *       发现新版就自动跳转到带 ?build=新号 的URL(缓存键不同,强制加载新版)。
  * 用法:每次「导出HTML并上传GitHub」前,把 BUILD_ID 改成新值(建议 当天日期+序号)。 */
-var BUILD_ID = '20261016v1';
+var BUILD_ID = '20261021v2';
 (function () {
   try {
     var DONE_KEY = 'gantt_build_done';
@@ -192,24 +192,24 @@ var BUILD_ID = '20261016v1';
   <h1>PCS产品规划里程碑</h1>
 
   <div class="tabs" id="tabs">
-    <div class="tab" data-mode="overview">📊 全局概览</div>
+    <div class="tab active" data-mode="overview">📊 全局概览</div>
     <div class="tab" data-mode="d2500">2500KW详情</div>
-    <div class="tab active" data-mode="d3450">3450KW详情</div>
-    <button id="backBtn" style="margin-left: 14px; font-size: 12px; padding: 2px 10px; cursor: pointer;">← 返回 3450KW 机型列表</button>
+    <div class="tab" data-mode="d3450">3450KW详情</div>
+    <button id="backBtn" style="margin-left: 14px; font-size: 12px; padding: 2px 10px; cursor: pointer; display: none;">← 返回 3450KW 机型列表</button>
   </div>
 
-  <div id="pageTitle" class="page-title" style=""><span class="page-title-machine">3450kW-V2-跟网</span> <span class="page-title-sub">各阶段进度与升级点</span></div>
+  <div id="pageTitle" class="page-title" style="display: none;"><span class="page-title-machine">1750kW-V2-构网</span> <span class="page-title-sub">各阶段进度与升级点</span></div>
 
   <div class="chart-box" style="position:relative">
-    <div id="yLabels" style="top: 20px; left: 20px; width: 260px; height: 415px; display: block;"><div class="y-label-row" style="position: absolute; left: 0px; right: 0px; top: 30px; height: 56px; flex-direction: column; align-items: flex-start; justify-content: center;"><div style="font-weight:bold;font-size:13px;color:#303133;line-height:18px;"><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#F7BE43;margin-right:5px;vertical-align:middle;"></span>一阶段降本</div><div style="font-size:11px;color:#666;line-height:15px;margin-top:3px;margin-left:15px;">升级点：基于主回路器件二供平替物料的降本</div></div><div class="y-label-row" style="position: absolute; left: 0px; right: 0px; top: 150px; height: 56px; flex-direction: column; align-items: flex-start; justify-content: center;"><div style="font-weight:bold;font-size:13px;color:#303133;line-height:18px;"><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#F1775F;margin-right:5px;vertical-align:middle;"></span>二阶段降本</div><div style="font-size:11px;color:#666;line-height:15px;margin-top:3px;margin-left:15px;">升级点：基于结构设计改动的降本</div></div><div class="y-label-row" style="position: absolute; left: 0px; right: 0px; top: 270px; height: 56px; flex-direction: column; align-items: flex-start; justify-content: center;"><div style="font-weight:bold;font-size:13px;color:#303133;line-height:18px;"><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#2EC4B6;margin-right:5px;vertical-align:middle;"></span>热虹吸</div><div style="font-size:11px;color:#666;line-height:15px;margin-top:3px;margin-left:15px;">升级点：基于相变技术引入的降本(热虹吸散热器)</div></div></div>
-    <div id="chartWrap" style="height: 435px; margin-left: 280px;">
-      <div id="chart" _echarts_instance_="ec_1792115059463" style="height: 415px; width: 1664px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); position: relative;"><div style="position: relative; width: 1664px; height: 415px; padding: 0px; margin: 0px; border-width: 0px; cursor: default;"><canvas data-zr-dom-id="zr_0" width="1896" height="473" style="position: absolute; left: 0px; top: 0px; width: 1664px; height: 415px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;"></canvas><canvas data-zr-dom-id="zr_100000" width="1896" height="473" style="position: absolute; left: 0px; top: 0px; width: 1664px; height: 415px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;"></canvas></div><div class="" style="position: absolute; display: block; border-style: solid; white-space: nowrap; z-index: 9999999; box-shadow: rgba(0, 0, 0, 0.2) 1px 2px 10px; transition: opacity 0.2s cubic-bezier(0.23, 1, 0.32, 1), visibility 0.2s cubic-bezier(0.23, 1, 0.32, 1); background-color: rgb(255, 255, 255); border-width: 1px; border-radius: 4px; color: rgb(102, 102, 102); font: 14px / 21px &quot;Microsoft YaHei&quot;; padding: 10px; top: 0px; left: 0px; transform: translate3d(814px, 61px, 0px); border-color: rgb(156, 107, 0); pointer-events: none; visibility: hidden; opacity: 0;"><b>3450kW-V2-跟网</b><br><span style="display:inline-block;margin-right:4px;border-radius:10px;width:10px;height:10px;background-color:#9C6B00;"></span> 一阶段归档完成<br>计划：2026-9-30 ~ 2026-10-15 (16天)</div></div>
+    <div id="yLabels" style="top: 20px; left: 20px; width: 150px; height: 667px; display: block;"><div class="y-label-row" style="position: absolute; left: 0px; right: 0px; height: 24px; top: 98px; font-weight: bold;"><a href="javascript:void(0)" title="点击查看该机型各阶段进度" style="cursor: pointer; text-decoration: none; color: rgb(31, 120, 180); border-bottom: 1px dashed rgb(31, 120, 180);">2500kW-V1-跟网</a> <span class="lc-badge lc-b-dev">在研</span></div><div class="y-label-row" style="position: absolute; left: 0px; right: 0px; height: 24px; top: 166px; font-weight: bold;"><a href="javascript:void(0)" title="点击查看该机型各阶段进度" style="cursor: pointer; text-decoration: none; color: rgb(31, 120, 180); border-bottom: 1px dashed rgb(31, 120, 180);">2500kW-V2-跟网</a> <span class="lc-badge lc-b-dev">在研</span></div><div class="y-label-row" style="position: absolute; left: 0px; right: 0px; height: 24px; top: 234px; font-weight: bold;"><a href="javascript:void(0)" title="点击查看该机型各阶段进度" style="cursor: pointer; text-decoration: none; color: rgb(31, 120, 180); border-bottom: 1px dashed rgb(31, 120, 180);">1250kW-V2-构网</a> <span class="lc-badge lc-b-dev">在研</span></div><div class="y-label-row" style="position: absolute; left: 0px; right: 0px; height: 24px; top: 370px; font-weight: bold;"><a href="javascript:void(0)" title="点击查看该机型各阶段进度" style="cursor: pointer; text-decoration: none; color: rgb(31, 120, 180); border-bottom: 1px dashed rgb(31, 120, 180);">3450kW-V1-跟网</a> <span class="lc-badge lc-b-dev">在研</span></div><div class="y-label-row" style="position: absolute; left: 0px; right: 0px; height: 24px; top: 438px; font-weight: bold;"><a href="javascript:void(0)" title="点击查看该机型各阶段进度" style="cursor: pointer; text-decoration: none; color: rgb(31, 120, 180); border-bottom: 1px dashed rgb(31, 120, 180);">3450kW-V2-跟网</a> <span class="lc-badge lc-b-dev">在研</span></div><div class="y-label-row" style="position: absolute; left: 0px; right: 0px; height: 24px; top: 506px; font-weight: bold;"><a href="javascript:void(0)" title="点击查看该机型各阶段进度" style="cursor: pointer; text-decoration: none; color: rgb(31, 120, 180); border-bottom: 1px dashed rgb(31, 120, 180);">1750kW-V2-构网</a> <span class="lc-badge lc-b-dev">在研</span></div><div class="y-label-row" style="position: absolute; left: 0px; right: 0px; height: 24px; top: 574px; font-weight: bold;"><a href="javascript:void(0)" title="点击查看该机型各阶段进度" style="cursor: pointer; text-decoration: none; color: rgb(31, 120, 180); border-bottom: 1px dashed rgb(31, 120, 180);">1000kW-V2</a> <span class="lc-badge lc-b-dev">在研</span></div><div style="position: absolute; left: 0px; right: 0px; top: 30px; height: 24px; display: flex; align-items: center; font-size: 13px; font-weight: bold; color: rgb(179, 117, 8);">── 2500KW（含1250kW） ──</div><div style="position: absolute; left: 0px; right: 0px; top: 302px; height: 24px; display: flex; align-items: center; font-size: 13px; font-weight: bold; color: rgb(31, 120, 180);">── 3450KW（含1750/1000kW） ──</div></div>
+    <div id="chartWrap" style="height: 687px; margin-left: 175px;">
+      <div id="chart" _echarts_instance_="ec_1792630907349" style="height: 667px; width: 1028px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); position: relative;"><div style="position: relative; width: 1028px; height: 667px; padding: 0px; margin: 0px; border-width: 0px; cursor: default;"><canvas data-zr-dom-id="zr_0" width="1171" height="760" style="position: absolute; left: 0px; top: 0px; width: 1028px; height: 667px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;"></canvas><canvas data-zr-dom-id="zr_100000" width="1171" height="760" style="position: absolute; left: 0px; top: 0px; width: 1028px; height: 667px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;"></canvas></div><div class="" style="position: absolute; display: block; border-style: solid; white-space: nowrap; z-index: 9999999; box-shadow: rgba(0, 0, 0, 0.2) 1px 2px 10px; transition: opacity 0.2s cubic-bezier(0.23, 1, 0.32, 1), visibility 0.2s cubic-bezier(0.23, 1, 0.32, 1), transform 0.4s cubic-bezier(0.23, 1, 0.32, 1); background-color: rgb(255, 255, 255); border-width: 1px; border-radius: 4px; color: rgb(102, 102, 102); font: 14px / 21px &quot;Microsoft YaHei&quot;; padding: 10px; top: 0px; left: 0px; transform: translate3d(654px, 194px, 0px); border-color: rgb(230, 149, 8); pointer-events: none; visibility: hidden; opacity: 0;"><b>2500kW-V2-跟网</b><br><span style="display:inline-block;margin-right:4px;border-radius:10px;width:10px;height:10px;background-color:#E69508;"></span> 板卡升级<br>计划：2026-9-30 ~ 2026-10-30<br>实际：2026-9-30 ~ 2026-11-30<br><span style="color:#F5222D;font-weight:bold">⚠ 延期 31 天</span>(实际结束晚于计划结束)</div></div>
     </div>
-    <div id="legendBox"><div class="legend-group"><div class="legend-group-title">一阶段降本</div><div class="legend-depth-row"><span class="legend-depth-swatch" style="background:#FCDD7A"></span><span>首台装配完成</span></div><div class="legend-depth-row"><span class="legend-depth-swatch" style="background:#F7BE43"></span><span>测试完成</span></div><div class="legend-depth-row"><span class="legend-depth-swatch" style="background:#E69508"></span><span>测试问题闭环</span></div><div class="legend-depth-row"><span class="legend-depth-swatch" style="background:#9C6B00"></span><span>归档完成/发布提单</span></div></div><div class="legend-group"><div class="legend-group-title">二阶段降本</div><div class="legend-depth-row"><span class="legend-depth-swatch" style="background:#FAA996"></span><span>首台装配完成</span></div><div class="legend-depth-row"><span class="legend-depth-swatch" style="background:#F1775F"></span><span>测试完成</span></div><div class="legend-depth-row"><span class="legend-depth-swatch" style="background:#D62412"></span><span>测试问题闭环</span></div><div class="legend-depth-row"><span class="legend-depth-swatch" style="background:#8C0F0A"></span><span>归档完成/发布提单</span></div></div><div class="legend-group"><div class="legend-group-title">热虹吸</div><div class="legend-depth-row"><span class="legend-depth-swatch" style="background:#A0E7E5"></span><span>首台装配完成</span></div><div class="legend-depth-row"><span class="legend-depth-swatch" style="background:#2EC4B6"></span><span>测试完成</span></div><div class="legend-depth-row"><span class="legend-depth-swatch" style="background:#0891A8"></span><span>测试问题闭环</span></div><div class="legend-depth-row"><span class="legend-depth-swatch" style="background:#05666A"></span><span>归档完成/发布提单</span></div></div><div class="legend-group"><div class="legend-group-title">延期标记</div><div class="legend-depth-row"><span>①实际结束晚于计划 ≥ 7 天;或②今天已超计划结束 ≥ 7 天且未 100%</span></div></div></div>
+    <div id="legendBox"><div class="legend-group"><div class="legend-group-title">2500KW（含1250kW）</div><div class="legend-depth-row"><span class="legend-depth-swatch" style="background:#E69508"></span><span>在研</span></div><div class="legend-depth-row"><span class="legend-depth-swatch" style="background:#9C6B00"></span><span>已完成</span></div><div class="legend-depth-row"><span class="legend-depth-swatch" style="background:#B8BCC4"></span><span>已替代</span></div></div><div class="legend-group"><div class="legend-group-title">3450KW（含1750/1000kW）</div><div class="legend-depth-row"><span class="legend-depth-swatch" style="background:#1F78B4"></span><span>在研</span></div><div class="legend-depth-row"><span class="legend-depth-swatch" style="background:#0B3D63"></span><span>已完成</span></div><div class="legend-depth-row"><span class="legend-depth-swatch" style="background:#B8BCC4"></span><span>已替代</span></div></div></div>
     <div id="err" style="display: none;"></div>
   </div>
 
-  <div id="upgradeMatrix" style="margin-top: 18px; display: none;"><div class="matrix-title">📋 全产品线 · 阶段升级点矩阵</div><table class="upgrade-matrix"><thead><tr><th style="width:170px;">机型</th><th style="width:140px;">阶段</th><th>升级点</th></tr></thead><tbody><tr><td rowspan="2" class="matrix-machine">2500kW-V1-跟网</td><td class="matrix-stage"><span style="background:#FFF3E0;color:#E65100;padding:3px 12px;border-radius:12px;font-weight:600;display:inline-block;">一阶段降本</span></td><td class="matrix-upgrade">基于主回路器件和结构器件做降本</td></tr><tr><td class="matrix-stage"><span style="background:#E8F5E9;color:#F5222D;padding:3px 12px;border-radius:12px;font-weight:600;display:inline-block;">二阶段降本</span></td><td class="matrix-upgrade">基于散热相关做降本</td></tr><tr><td rowspan="3" class="matrix-machine">2500kW-V2-跟网</td><td class="matrix-stage"><span style="background:#FFF3E0;color:#F5222D;padding:3px 12px;border-radius:12px;font-weight:600;display:inline-block;">一阶段降本</span></td><td class="matrix-upgrade">基于主回路器件和结构器件做降本</td></tr><tr><td class="matrix-stage"><span style="background:#E8F5E9;color:#F5222D;padding:3px 12px;border-radius:12px;font-weight:600;display:inline-block;">二阶段降本</span></td><td class="matrix-upgrade">基于散热相关做降本</td></tr><tr><td class="matrix-stage"><span style="background:#F5F5F5;color:#F5222D;padding:3px 12px;border-radius:12px;font-weight:600;display:inline-block;">板卡升级</span></td><td class="matrix-upgrade">基于V2板卡测试问题进行闭环升级</td></tr><tr><td rowspan="1" class="matrix-machine">1250kW-V2-构网</td><td class="matrix-stage"><span style="background:#FFF3E0;color:#F5222D;padding:3px 12px;border-radius:12px;font-weight:600;display:inline-block;">一阶段降本</span></td><td class="matrix-upgrade">基于主回路器件和结构器件做降本</td></tr><tr><td rowspan="2" class="matrix-machine">3450kW-V1-跟网</td><td class="matrix-stage"><span style="background:#E3F2FD;color:#1565C0;padding:3px 12px;border-radius:12px;font-weight:600;display:inline-block;">批量</span></td><td class="matrix-upgrade"><span style="color:#c0c4cc;">—</span></td></tr><tr><td class="matrix-stage"><span style="background:#FFF3E0;color:#F5222D;padding:3px 12px;border-radius:12px;font-weight:600;display:inline-block;">一阶段降本</span></td><td class="matrix-upgrade">基于主回路器件二供平替物料的降本</td></tr><tr><td rowspan="3" class="matrix-machine">3450kW-V2-跟网</td><td class="matrix-stage"><span style="background:#FFF3E0;color:#F5222D;padding:3px 12px;border-radius:12px;font-weight:600;display:inline-block;">一阶段降本</span></td><td class="matrix-upgrade">基于主回路器件二供平替物料的降本</td></tr><tr><td class="matrix-stage"><span style="background:#E8F5E9;color:#2E7D32;padding:3px 12px;border-radius:12px;font-weight:600;display:inline-block;">二阶段降本</span></td><td class="matrix-upgrade">基于结构设计改动的降本</td></tr><tr><td class="matrix-stage"><span style="background:#E0F7F5;color:#F5222D;padding:3px 12px;border-radius:12px;font-weight:600;display:inline-block;">热虹吸</span></td><td class="matrix-upgrade">基于相变技术引入的降本(热虹吸散热器)</td></tr><tr><td rowspan="1" class="matrix-machine">1750kW-V2-构网</td><td class="matrix-stage"><span style="background:#FFF3E0;color:#F5222D;padding:3px 12px;border-radius:12px;font-weight:600;display:inline-block;">一阶段降本</span></td><td class="matrix-upgrade">基于主回路器件二供平替物料的降本</td></tr><tr><td rowspan="1" class="matrix-machine">1000kW-V2</td><td class="matrix-stage"><span style="background:#FFF3E0;color:#F5222D;padding:3px 12px;border-radius:12px;font-weight:600;display:inline-block;">一阶段降本</span></td><td class="matrix-upgrade">针对低温场景需求，基于3450KW进行的改制</td></tr></tbody></table></div>
+  <div id="upgradeMatrix" style="margin-top: 18px;"><div class="matrix-title">📋 全产品线 · 阶段升级点矩阵</div><table class="upgrade-matrix"><thead><tr><th style="width:170px;">机型</th><th style="width:140px;">阶段</th><th>升级点</th></tr></thead><tbody><tr><td rowspan="2" class="matrix-machine">2500kW-V1-跟网</td><td class="matrix-stage"><span style="background:#FFF3E0;color:#E65100;padding:3px 12px;border-radius:12px;font-weight:600;display:inline-block;">一阶段降本</span></td><td class="matrix-upgrade">基于主回路器件和结构器件做降本</td></tr><tr><td class="matrix-stage"><span style="background:#E8F5E9;color:#F5222D;padding:3px 12px;border-radius:12px;font-weight:600;display:inline-block;">二阶段降本</span></td><td class="matrix-upgrade">基于散热相关做降本</td></tr><tr><td rowspan="3" class="matrix-machine">2500kW-V2-跟网</td><td class="matrix-stage"><span style="background:#FFF3E0;color:#F5222D;padding:3px 12px;border-radius:12px;font-weight:600;display:inline-block;">一阶段降本</span></td><td class="matrix-upgrade">基于主回路器件和结构器件做降本</td></tr><tr><td class="matrix-stage"><span style="background:#E8F5E9;color:#F5222D;padding:3px 12px;border-radius:12px;font-weight:600;display:inline-block;">二阶段降本</span></td><td class="matrix-upgrade">基于散热相关做降本</td></tr><tr><td class="matrix-stage"><span style="background:#F5F5F5;color:#F5222D;padding:3px 12px;border-radius:12px;font-weight:600;display:inline-block;">板卡升级</span></td><td class="matrix-upgrade">基于V2板卡测试问题进行闭环升级</td></tr><tr><td rowspan="1" class="matrix-machine">1250kW-V2-构网</td><td class="matrix-stage"><span style="background:#FFF3E0;color:#F5222D;padding:3px 12px;border-radius:12px;font-weight:600;display:inline-block;">一阶段降本</span></td><td class="matrix-upgrade">基于主回路器件和结构器件做降本</td></tr><tr><td rowspan="2" class="matrix-machine">3450kW-V1-跟网</td><td class="matrix-stage"><span style="background:#E3F2FD;color:#1565C0;padding:3px 12px;border-radius:12px;font-weight:600;display:inline-block;">批量</span></td><td class="matrix-upgrade"><span style="color:#c0c4cc;">—</span></td></tr><tr><td class="matrix-stage"><span style="background:#FFF3E0;color:#F5222D;padding:3px 12px;border-radius:12px;font-weight:600;display:inline-block;">一阶段降本</span></td><td class="matrix-upgrade">基于主回路器件二供平替物料的降本</td></tr><tr><td rowspan="3" class="matrix-machine">3450kW-V2-跟网</td><td class="matrix-stage"><span style="background:#FFF3E0;color:#F5222D;padding:3px 12px;border-radius:12px;font-weight:600;display:inline-block;">一阶段降本</span></td><td class="matrix-upgrade">基于主回路器件二供平替物料的降本</td></tr><tr><td class="matrix-stage"><span style="background:#E8F5E9;color:#2E7D32;padding:3px 12px;border-radius:12px;font-weight:600;display:inline-block;">二阶段降本</span></td><td class="matrix-upgrade">基于结构设计改动的降本</td></tr><tr><td class="matrix-stage"><span style="background:#E0F7F5;color:#F5222D;padding:3px 12px;border-radius:12px;font-weight:600;display:inline-block;">热虹吸</span></td><td class="matrix-upgrade">基于相变技术引入的降本(热虹吸散热器)</td></tr><tr><td rowspan="1" class="matrix-machine">1750kW-V2-构网</td><td class="matrix-stage"><span style="background:#FFF3E0;color:#F5222D;padding:3px 12px;border-radius:12px;font-weight:600;display:inline-block;">一阶段降本</span></td><td class="matrix-upgrade">基于主回路器件二供平替物料的降本</td></tr><tr><td rowspan="1" class="matrix-machine">1000kW-V2</td><td class="matrix-stage"><span style="background:#FFF3E0;color:#F5222D;padding:3px 12px;border-radius:12px;font-weight:600;display:inline-block;">一阶段降本</span></td><td class="matrix-upgrade">针对低温场景需求，基于3450KW进行的改制</td></tr></tbody></table></div>
 
   <!-- ===== 工具栏 ===== -->
   <div class="toolbar" style="margin-top:12px;">
@@ -227,7 +227,7 @@ window.onerror = function(msg) {
 };
 
 // ===== 数据(每条加 progress 字段,0-100,默认100) =====
-var MACHINES = {"2500kW-V1-跟网":{"tasks":[{"resource":"2500kW-V1-跟网","task":"一阶段测试问题闭环","stage":"一阶段","start":"2026-9-15","end":"2026-9-20","progress":100,"upgrade":"基于主回路器件和结构器件做降本","actualStart":"2026-9-15","actualEnd":"2026-10-12"},{"resource":"2500kW-V1-跟网","task":"一阶段归档完成","stage":"一阶段","start":"2026-9-20","end":"2026-9-30","progress":100,"actualStart":"2026-9-20","actualEnd":"2026-10-30"},{"resource":"2500kW-V1-跟网","task":"一阶段发布/提单","stage":"一阶段","start":"2026-9-30","end":"2026-9-30","progress":100,"actualStart":"2026-9-30","actualEnd":"2026-10-30"},{"resource":"2500kW-V1-跟网","task":"二阶段测试完成","stage":"二阶段","start":"2026-8-25","end":"2026-11-23","progress":5,"upgrade":"基于散热相关做降本","actualStart":"","actualEnd":""},{"resource":"2500kW-V1-跟网","task":"二阶段测试问题闭环","stage":"二阶段","start":"2026-11-23","end":"2026-12-23","progress":0,"actualStart":"","actualEnd":""},{"resource":"2500kW-V1-跟网","task":"二阶段归档完成","stage":"二阶段","start":"2026-12-23","end":"2026-12-30","progress":0,"actualStart":"","actualEnd":""},{"resource":"2500kW-V1-跟网","task":"二阶段发布/提单","stage":"二阶段","start":"2026-12-30","end":"2026-12-30","progress":0,"actualStart":"","actualEnd":""}]},"2500kW-V2-跟网":{"tasks":[{"resource":"2500kW-V2-跟网","task":"一阶段测试完成","stage":"一阶段","start":"2026-8-3","end":"2026-9-15","progress":95,"upgrade":"基于主回路器件和结构器件做降本","actualStart":"2026-8-3","actualEnd":"2026-10-12"},{"resource":"2500kW-V2-跟网","task":"一阶段测试问题闭环","stage":"一阶段","start":"2026-9-15","end":"2026-9-20","progress":80,"actualStart":"2026-10-12","actualEnd":"2026-10-12"},{"resource":"2500kW-V2-跟网","task":"一阶段归档完成","stage":"一阶段","start":"2026-9-20","end":"2026-9-30","progress":50,"actualStart":"2026-9-20","actualEnd":"2026-10-30"},{"resource":"2500kW-V2-跟网","task":"一阶段发布/提单","stage":"一阶段","start":"2026-9-30","end":"2026-9-30","progress":50,"actualStart":"2026-9-30","actualEnd":"2026-10-30"},{"resource":"2500kW-V2-跟网","task":"板卡升级测试完成","stage":"板卡升级","start":"2026-9-30","end":"2026-9-30","progress":80,"upgrade":"基于V2板卡测试问题进行闭环升级","actualStart":"2026-9-30","actualEnd":"2026-10-16"},{"resource":"2500kW-V2-跟网","task":"板卡升级测试问题闭环","stage":"板卡升级","start":"2026-9-30","end":"2026-10-15","progress":60,"actualStart":"2026-9-30","actualEnd":"2026-10-16"},{"resource":"2500kW-V2-跟网","task":"板卡升级归档完成","stage":"板卡升级","start":"2026-10-15","end":"2026-10-30","progress":0,"actualStart":"2026-10-15","actualEnd":"2026-10-23"},{"resource":"2500kW-V2-跟网","task":"板卡升级发布/提单","stage":"板卡升级","start":"2026-10-30","end":"2026-10-30","progress":null,"actualStart":"2026-10-23","actualEnd":"2026-11-30"},{"resource":"2500kW-V2-跟网","task":"二阶段测试完成","stage":"二阶段","start":"2026-10-30","end":"2026-11-23","progress":5,"upgrade":"基于散热相关做降本","actualStart":"","actualEnd":""},{"resource":"2500kW-V2-跟网","task":"二阶段测试问题闭环","stage":"二阶段","start":"2026-11-23","end":"2026-12-23","progress":null,"actualStart":"","actualEnd":""},{"resource":"2500kW-V2-跟网","task":"二阶段归档完成","stage":"二阶段","start":"2026-12-23","end":"2026-12-30","progress":0,"actualStart":"","actualEnd":""},{"resource":"2500kW-V2-跟网","task":"二阶段发布/提单","stage":"二阶段","start":"2026-12-30","end":"2026-12-30","progress":0,"actualStart":"","actualEnd":""}]},"1250kW-V2-构网":{"tasks":[{"resource":"1250kW-V2-构网","task":"一阶段首台装配完成","stage":"一阶段","start":"2026-8-3","end":"2026-9-15","progress":70,"upgrade":"基于主回路器件和结构器件做降本","actualStart":"2026-8-3","actualEnd":"2026-10-12"},{"resource":"1250kW-V2-构网","task":"一阶段测试完成","stage":"一阶段","start":"2026-9-15","end":"2026-9-20","progress":0,"actualStart":"2026-10-12","actualEnd":"2026-10-12"},{"resource":"1250kW-V2-构网","task":"一阶段测试问题闭环","stage":"一阶段","start":"2026-9-20","end":"2026-9-30","progress":0,"actualStart":"2026-9-20","actualEnd":"2026-10-30"},{"resource":"1250kW-V2-构网","task":"一阶段归档完成","stage":"一阶段","start":"2026-9-30","end":"2026-9-30","progress":0,"actualStart":"2026-9-30","actualEnd":"2026-10-30"},{"resource":"1250kW-V2-构网","task":"一阶段发布/提单","stage":"一阶段","start":"2026-9-30","end":"2026-9-30","progress":0,"actualStart":"2026-9-30","actualEnd":"2026-10-30"}]},"3450kW-V1-跟网":{"tasks":[{"resource":"3450kW-V1-跟网","task":"批量归档完成","stage":"批量","start":"2026-9-1","end":"2026-9-1","progress":100,"actualStart":"","actualEnd":""},{"resource":"3450kW-V1-跟网","task":"批量发布/提单","stage":"批量","start":"2026-9-1","end":"2026-9-1","progress":100,"actualStart":"","actualEnd":""},{"resource":"3450kW-V1-跟网","task":"一阶段首台装配完成","stage":"一阶段","start":"2026-9-1","end":"2026-9-15","progress":100,"upgrade":"基于主回路器件二供平替物料的降本","actualStart":"2026-9-1","actualEnd":"2026-9-17"},{"resource":"3450kW-V1-跟网","task":"一阶段测试完成","stage":"一阶段","start":"2026-9-15","end":"2026-9-25","progress":80,"actualStart":"2026-9-17","actualEnd":"2026-10-16"},{"resource":"3450kW-V1-跟网","task":"一阶段测试问题闭环","stage":"一阶段","start":"2026-9-25","end":"2026-9-30","progress":0,"actualStart":"2026-10-16","actualEnd":"2026-10-16"},{"resource":"3450kW-V1-跟网","task":"一阶段归档完成","stage":"一阶段","start":"2026-9-30","end":"2026-10-15","progress":0,"actualStart":"2026-10-16","actualEnd":"2026-10-30"},{"resource":"3450kW-V1-跟网","task":"一阶段发布/提单","stage":"一阶段","start":"2026-10-15","end":"2026-10-30","progress":0,"actualStart":"2026-10-30","actualEnd":"2026-10-30"}]},"3450kW-V2-跟网":{"tasks":[{"resource":"3450kW-V2-跟网","task":"一阶段首台装配完成","stage":"一阶段","start":"2026-9-1","end":"2026-9-15","progress":100,"upgrade":"基于主回路器件二供平替物料的降本","actualStart":"2026-9-1","actualEnd":"2026-9-17"},{"resource":"3450kW-V2-跟网","task":"一阶段测试完成","stage":"一阶段","start":"2026-9-15","end":"2026-9-25","progress":80,"actualStart":"2026-9-17","actualEnd":"2026-10-16"},{"resource":"3450kW-V2-跟网","task":"一阶段测试问题闭环","stage":"一阶段","start":"2026-9-25","end":"2026-9-30","progress":0,"actualStart":"2026-10-16","actualEnd":"2026-10-16"},{"resource":"3450kW-V2-跟网","task":"一阶段归档完成","stage":"一阶段","start":"2026-9-30","end":"2026-10-15","progress":0,"actualStart":"2026-10-16","actualEnd":"2026-10-30"},{"resource":"3450kW-V2-跟网","task":"一阶段发布/提单","stage":"一阶段","start":"2026-10-15","end":"2026-10-30","progress":0,"actualStart":"2026-10-30","actualEnd":"2026-10-30"},{"resource":"3450kW-V2-跟网","task":"热虹吸首台装配完成","stage":"热虹吸","start":"2026-7-3","end":"2026-9-7","progress":100,"upgrade":"基于相变技术引入的降本(热虹吸散热器)","actualStart":"","actualEnd":""},{"resource":"3450kW-V2-跟网","task":"热虹吸测试完成","stage":"热虹吸","start":"2026-9-7","end":"2026-10-27","progress":50,"actualStart":"2026-9-7","actualEnd":"2026-10-29"},{"resource":"3450kW-V2-跟网","task":"热虹吸测试问题闭环","stage":"热虹吸","start":"2026-10-27","end":"2026-10-27","progress":0,"actualStart":"2026-10-29","actualEnd":"2026-10-29"},{"resource":"3450kW-V2-跟网","task":"热虹吸归档完成","stage":"热虹吸","start":"2026-10-27","end":"2026-11-11","progress":0,"actualStart":"","actualEnd":""},{"resource":"3450kW-V2-跟网","task":"热虹吸发布/提单","stage":"热虹吸","start":"2026-11-11","end":"2027-1-30","progress":0,"actualStart":"","actualEnd":""},{"resource":"3450kW-V2-跟网","task":"二阶段首台装配完成","stage":"二阶段","start":"2026-10-30","end":"2026-12-17","progress":0,"upgrade":"基于结构设计改动的降本","actualStart":"","actualEnd":""},{"resource":"3450kW-V2-跟网","task":"二阶段测试完成","stage":"二阶段","start":"2026-11-4","end":"2027-1-27","progress":0,"actualStart":"","actualEnd":""},{"resource":"3450kW-V2-跟网","task":"二阶段测试问题闭环","stage":"二阶段","start":"2027-1-27","end":"2027-1-27","progress":0,"actualStart":"","actualEnd":""},{"resource":"3450kW-V2-跟网","task":"二阶段归档完成","stage":"二阶段","start":"2027-1-27","end":"2027-1-30","progress":0,"actualStart":"","actualEnd":""},{"resource":"3450kW-V2-跟网","task":"二阶段发布/提单","stage":"二阶段","start":"2027-1-30","end":"2027-1-30","progress":0,"actualStart":"","actualEnd":""}]},"1750kW-V2-构网":{"tasks":[{"resource":"1750kW-V2-构网","task":"一阶段首台装配完成","stage":"一阶段","start":"2026-9-1","end":"2026-9-15","progress":10,"upgrade":"基于主回路器件二供平替物料的降本","actualStart":"2026-9-1","actualEnd":"2026-9-17"},{"resource":"1750kW-V2-构网","task":"一阶段测试完成","stage":"一阶段","start":"2026-9-15","end":"2026-9-25","progress":10,"actualStart":"2026-9-17","actualEnd":"2026-10-16"},{"resource":"1750kW-V2-构网","task":"一阶段测试问题闭环","stage":"一阶段","start":"2026-9-25","end":"2026-9-30","progress":0,"actualStart":"2026-10-16","actualEnd":"2026-10-16"},{"resource":"1750kW-V2-构网","task":"一阶段归档完成","stage":"一阶段","start":"2026-9-30","end":"2026-10-15","progress":0,"actualStart":"2026-10-16","actualEnd":"2026-10-30"},{"resource":"1750kW-V2-构网","task":"一阶段发布/提单","stage":"一阶段","start":"2026-10-15","end":"2026-10-30","progress":null,"actualStart":"2026-10-30","actualEnd":"2026-10-30"}]},"1000kW-V2":{"tasks":[{"resource":"1000kW-V2","task":"一阶段首台装配完成","stage":"一阶段","start":"2026-8-26","end":"2026-10-16","progress":30,"upgrade":"针对低温场景需求，基于3450KW进行的改制","actualStart":"2026-8-28","actualEnd":"2026-10-26"},{"resource":"1000kW-V2","task":"一阶段测试完成","stage":"一阶段","start":"2026-10-16","end":"2026-10-30","progress":0,"actualStart":"2026-10-20","actualEnd":"2026-11-9"},{"resource":"1000kW-V2","task":"一阶段测试问题闭环","stage":"一阶段","start":"2026-10-30","end":"2026-11-6","progress":0,"actualStart":"2026-10-30","actualEnd":"2026-11-16"},{"resource":"1000kW-V2","task":"一阶段归档完成","stage":"一阶段","start":"2026-11-6","end":"2026-11-13","progress":0,"actualStart":"2026-11-6","actualEnd":"2026-11-23"},{"resource":"1000kW-V2","task":"一阶段发布/提单","stage":"一阶段","start":"2026-11-13","end":"2026-11-13","progress":0,"actualStart":"2026-11-23","actualEnd":"2026-11-23"}]}};
+var MACHINES = {"2500kW-V1-跟网":{"tasks":[{"resource":"2500kW-V1-跟网","task":"一阶段测试问题完成","stage":"一阶段","start":"2026-8-3","end":"2026-9-15","progress":100,"upgrade":"基于主回路器件和结构器件做降本","actualStart":"2026-8-3","actualEnd":"2026-9-15"},{"resource":"2500kW-V1-跟网","task":"一阶段测试问题闭环","stage":"一阶段","start":"2026-9-15","end":"2026-9-20","progress":100,"actualStart":"2026-9-15","actualEnd":"2026-10-12"},{"resource":"2500kW-V1-跟网","task":"一阶段归档完成","stage":"一阶段","start":"2026-9-20","end":"2026-9-30","progress":100,"actualStart":"2026-9-20","actualEnd":"2026-10-30"},{"resource":"2500kW-V1-跟网","task":"一阶段发布/提单","stage":"一阶段","start":"2026-9-30","end":"2026-9-30","progress":100,"actualStart":"2026-9-30","actualEnd":"2026-10-30"},{"resource":"2500kW-V1-跟网","task":"二阶段测试完成","stage":"二阶段","start":"2026-8-25","end":"2026-11-23","progress":5,"upgrade":"基于散热相关做降本","actualStart":"","actualEnd":""},{"resource":"2500kW-V1-跟网","task":"二阶段测试问题闭环","stage":"二阶段","start":"2026-11-23","end":"2026-12-23","progress":0,"actualStart":"","actualEnd":""},{"resource":"2500kW-V1-跟网","task":"二阶段归档完成","stage":"二阶段","start":"2026-12-23","end":"2026-12-30","progress":0,"actualStart":"","actualEnd":""},{"resource":"2500kW-V1-跟网","task":"二阶段发布/提单","stage":"二阶段","start":"2026-12-30","end":"2026-12-30","progress":0,"actualStart":"","actualEnd":""}]},"2500kW-V2-跟网":{"tasks":[{"resource":"2500kW-V2-跟网","task":"一阶段测试完成","stage":"一阶段","start":"2026-8-3","end":"2026-9-15","progress":95,"upgrade":"基于主回路器件和结构器件做降本","actualStart":"2026-8-3","actualEnd":"2026-10-12"},{"resource":"2500kW-V2-跟网","task":"一阶段测试问题闭环","stage":"一阶段","start":"2026-9-15","end":"2026-9-20","progress":80,"actualStart":"2026-10-12","actualEnd":"2026-10-12"},{"resource":"2500kW-V2-跟网","task":"一阶段归档完成","stage":"一阶段","start":"2026-9-20","end":"2026-9-30","progress":50,"actualStart":"2026-9-20","actualEnd":"2026-10-30"},{"resource":"2500kW-V2-跟网","task":"一阶段发布/提单","stage":"一阶段","start":"2026-9-30","end":"2026-9-30","progress":50,"actualStart":"2026-9-30","actualEnd":"2026-10-30"},{"resource":"2500kW-V2-跟网","task":"板卡升级测试完成","stage":"板卡升级","start":"2026-9-30","end":"2026-9-30","progress":80,"upgrade":"基于V2板卡测试问题进行闭环升级","actualStart":"2026-9-30","actualEnd":"2026-10-16"},{"resource":"2500kW-V2-跟网","task":"板卡升级测试问题闭环","stage":"板卡升级","start":"2026-9-30","end":"2026-10-15","progress":60,"actualStart":"2026-9-30","actualEnd":"2026-10-16"},{"resource":"2500kW-V2-跟网","task":"板卡升级归档完成","stage":"板卡升级","start":"2026-10-15","end":"2026-10-30","progress":0,"actualStart":"2026-10-15","actualEnd":"2026-10-23"},{"resource":"2500kW-V2-跟网","task":"板卡升级发布/提单","stage":"板卡升级","start":"2026-10-30","end":"2026-10-30","progress":null,"actualStart":"2026-10-23","actualEnd":"2026-11-30"},{"resource":"2500kW-V2-跟网","task":"二阶段测试完成","stage":"二阶段","start":"2026-10-30","end":"2026-11-23","progress":5,"upgrade":"基于散热相关做降本","actualStart":"","actualEnd":""},{"resource":"2500kW-V2-跟网","task":"二阶段测试问题闭环","stage":"二阶段","start":"2026-11-23","end":"2026-12-23","progress":null,"actualStart":"","actualEnd":""},{"resource":"2500kW-V2-跟网","task":"二阶段归档完成","stage":"二阶段","start":"2026-12-23","end":"2026-12-30","progress":0,"actualStart":"","actualEnd":""},{"resource":"2500kW-V2-跟网","task":"二阶段发布/提单","stage":"二阶段","start":"2026-12-30","end":"2026-12-30","progress":0,"actualStart":"","actualEnd":""}]},"1250kW-V2-构网":{"tasks":[{"resource":"1250kW-V2-构网","task":"一阶段首台装配完成","stage":"一阶段","start":"2026-8-3","end":"2026-9-15","progress":70,"upgrade":"基于主回路器件和结构器件做降本","actualStart":"2026-8-3","actualEnd":"2026-10-12"},{"resource":"1250kW-V2-构网","task":"一阶段测试完成","stage":"一阶段","start":"2026-9-15","end":"2026-9-20","progress":0,"actualStart":"2026-10-12","actualEnd":"2026-10-12"},{"resource":"1250kW-V2-构网","task":"一阶段测试问题闭环","stage":"一阶段","start":"2026-9-20","end":"2026-9-30","progress":0,"actualStart":"2026-9-20","actualEnd":"2026-10-30"},{"resource":"1250kW-V2-构网","task":"一阶段归档完成","stage":"一阶段","start":"2026-9-30","end":"2026-9-30","progress":0,"actualStart":"2026-9-30","actualEnd":"2026-10-30"},{"resource":"1250kW-V2-构网","task":"一阶段发布/提单","stage":"一阶段","start":"2026-9-30","end":"2026-9-30","progress":0,"actualStart":"2026-9-30","actualEnd":"2026-10-30"}]},"3450kW-V1-跟网":{"tasks":[{"resource":"3450kW-V1-跟网","task":"批量归档完成","stage":"批量","start":"2026-9-1","end":"2026-9-1","progress":100,"actualStart":"","actualEnd":""},{"resource":"3450kW-V1-跟网","task":"批量发布/提单","stage":"批量","start":"2026-9-1","end":"2026-9-1","progress":100,"actualStart":"","actualEnd":""},{"resource":"3450kW-V1-跟网","task":"一阶段首台装配完成","stage":"一阶段","start":"2026-9-1","end":"2026-9-15","progress":100,"upgrade":"基于主回路器件二供平替物料的降本","actualStart":"2026-9-1","actualEnd":"2026-9-17"},{"resource":"3450kW-V1-跟网","task":"一阶段测试完成","stage":"一阶段","start":"2026-9-15","end":"2026-9-25","progress":80,"actualStart":"2026-9-17","actualEnd":"2026-10-16"},{"resource":"3450kW-V1-跟网","task":"一阶段测试问题闭环","stage":"一阶段","start":"2026-9-25","end":"2026-9-30","progress":0,"actualStart":"2026-10-16","actualEnd":"2026-10-16"},{"resource":"3450kW-V1-跟网","task":"一阶段归档完成","stage":"一阶段","start":"2026-9-30","end":"2026-10-15","progress":0,"actualStart":"2026-10-16","actualEnd":"2026-10-30"},{"resource":"3450kW-V1-跟网","task":"一阶段发布/提单","stage":"一阶段","start":"2026-10-15","end":"2026-10-30","progress":0,"actualStart":"2026-10-30","actualEnd":"2026-10-30"}]},"3450kW-V2-跟网":{"tasks":[{"resource":"3450kW-V2-跟网","task":"一阶段首台装配完成","stage":"一阶段","start":"2026-9-1","end":"2026-9-15","progress":100,"upgrade":"基于主回路器件二供平替物料的降本","actualStart":"2026-9-1","actualEnd":"2026-9-17"},{"resource":"3450kW-V2-跟网","task":"一阶段测试完成","stage":"一阶段","start":"2026-9-15","end":"2026-9-25","progress":80,"actualStart":"2026-9-17","actualEnd":"2026-10-16"},{"resource":"3450kW-V2-跟网","task":"一阶段测试问题闭环","stage":"一阶段","start":"2026-9-25","end":"2026-9-30","progress":0,"actualStart":"2026-10-16","actualEnd":"2026-10-16"},{"resource":"3450kW-V2-跟网","task":"一阶段归档完成","stage":"一阶段","start":"2026-9-30","end":"2026-10-15","progress":0,"actualStart":"2026-10-16","actualEnd":"2026-10-30"},{"resource":"3450kW-V2-跟网","task":"一阶段发布/提单","stage":"一阶段","start":"2026-10-15","end":"2026-10-30","progress":0,"actualStart":"2026-10-30","actualEnd":"2026-10-30"},{"resource":"3450kW-V2-跟网","task":"热虹吸首台装配完成","stage":"热虹吸","start":"2026-7-3","end":"2026-9-7","progress":100,"upgrade":"基于相变技术引入的降本(热虹吸散热器)","actualStart":"","actualEnd":""},{"resource":"3450kW-V2-跟网","task":"热虹吸测试完成","stage":"热虹吸","start":"2026-9-7","end":"2026-10-27","progress":50,"actualStart":"2026-9-7","actualEnd":"2026-10-29"},{"resource":"3450kW-V2-跟网","task":"热虹吸测试问题闭环","stage":"热虹吸","start":"2026-10-27","end":"2026-10-27","progress":0,"actualStart":"2026-10-29","actualEnd":"2026-10-29"},{"resource":"3450kW-V2-跟网","task":"热虹吸归档完成","stage":"热虹吸","start":"2026-10-27","end":"2026-11-11","progress":0,"actualStart":"","actualEnd":""},{"resource":"3450kW-V2-跟网","task":"热虹吸发布/提单","stage":"热虹吸","start":"2026-11-11","end":"2027-1-30","progress":0,"actualStart":"","actualEnd":""},{"resource":"3450kW-V2-跟网","task":"二阶段首台装配完成","stage":"二阶段","start":"2026-10-30","end":"2026-12-17","progress":0,"upgrade":"基于结构设计改动的降本","actualStart":"","actualEnd":""},{"resource":"3450kW-V2-跟网","task":"二阶段测试完成","stage":"二阶段","start":"2026-11-4","end":"2027-1-27","progress":0,"actualStart":"","actualEnd":""},{"resource":"3450kW-V2-跟网","task":"二阶段测试问题闭环","stage":"二阶段","start":"2027-1-27","end":"2027-1-27","progress":0,"actualStart":"","actualEnd":""},{"resource":"3450kW-V2-跟网","task":"二阶段归档完成","stage":"二阶段","start":"2027-1-27","end":"2027-1-30","progress":0,"actualStart":"","actualEnd":""},{"resource":"3450kW-V2-跟网","task":"二阶段发布/提单","stage":"二阶段","start":"2027-1-30","end":"2027-1-30","progress":0,"actualStart":"","actualEnd":""}]},"1750kW-V2-构网":{"tasks":[{"resource":"1750kW-V2-构网","task":"一阶段首台装配完成","stage":"一阶段","start":"2026-9-1","end":"2026-9-15","progress":10,"upgrade":"基于主回路器件二供平替物料的降本","actualStart":"2026-9-1","actualEnd":"2026-9-17"},{"resource":"1750kW-V2-构网","task":"一阶段测试完成","stage":"一阶段","start":"2026-9-15","end":"2026-9-25","progress":10,"actualStart":"2026-9-17","actualEnd":"2026-10-16"},{"resource":"1750kW-V2-构网","task":"一阶段测试问题闭环","stage":"一阶段","start":"2026-9-25","end":"2026-9-30","progress":0,"actualStart":"2026-10-16","actualEnd":"2026-10-16"},{"resource":"1750kW-V2-构网","task":"一阶段归档完成","stage":"一阶段","start":"2026-9-30","end":"2026-10-15","progress":0,"actualStart":"2026-10-16","actualEnd":"2026-10-30"},{"resource":"1750kW-V2-构网","task":"一阶段发布/提单","stage":"一阶段","start":"2026-10-15","end":"2026-10-30","progress":null,"actualStart":"2026-10-30","actualEnd":"2026-10-30"}]},"1000kW-V2":{"tasks":[{"resource":"1000kW-V2","task":"一阶段首台装配完成","stage":"一阶段","start":"2026-8-26","end":"2026-10-16","progress":30,"upgrade":"针对低温场景需求，基于3450KW进行的改制","actualStart":"2026-8-28","actualEnd":"2026-10-26"},{"resource":"1000kW-V2","task":"一阶段测试完成","stage":"一阶段","start":"2026-10-16","end":"2026-10-30","progress":0,"actualStart":"2026-10-20","actualEnd":"2026-11-9"},{"resource":"1000kW-V2","task":"一阶段测试问题闭环","stage":"一阶段","start":"2026-10-30","end":"2026-11-6","progress":0,"actualStart":"2026-10-30","actualEnd":"2026-11-16"},{"resource":"1000kW-V2","task":"一阶段归档完成","stage":"一阶段","start":"2026-11-6","end":"2026-11-13","progress":0,"actualStart":"2026-11-6","actualEnd":"2026-11-23"},{"resource":"1000kW-V2","task":"一阶段发布/提单","stage":"一阶段","start":"2026-11-13","end":"2026-11-13","progress":0,"actualStart":"2026-11-23","actualEnd":"2026-11-23"}]}};
 
 // v4: 由 MACHINES 展平出甘特明细(字段与旧 defaultData 完全一致); 自动填充 stage 字段
 var defaultData = (function () {
@@ -808,30 +808,131 @@ function computeMachineMeta() {
   }
   return meta;
 }
-// 概览页颜色: 已替代=灰; 新产品=彩(2500KW金黄/3450KW蓝); 深色=已完成
-function overviewColor(m) {
-  if (m.isReplaced) return '#B8BCC4';
-  if (m.status === '已完成') return m.category === '2500KW' ? '#9C6B00' : '#0B3D63';
-  if (m.status === '规划中') return m.category === '2500KW' ? '#F7BE43' : '#5BA8D6';
-  return m.category === '2500KW' ? '#E69508' : '#1F78B4';
+// 概览页阶段段块配色: 沿用页下方图例 —— 2500KW=黄色系, 3450KW=蓝色系
+// 按阶段状态选深浅: 在研=亮色 / 已完成=深色 / 已替代=灰 / 规划中=浅亮色
+// 同机型内相邻两段若同色, 给后者加底纹(decal)区分
+function ovSegColor(category, status) {
+  if (status === '已替代') return '#B8BCC4';
+  if (category === '2500KW') {
+    if (status === '已完成') return '#9C6B00';
+    if (status === '规划中') return '#F7BE43';
+    return '#E69508';
+  }
+  if (status === '已完成') return '#0B3D63';
+  if (status === '规划中') return '#5BA8D6';
+  return '#1F78B4';
 }
-// 概览数据: 每个机型压缩成一条伪任务(计划跨度=首尾, 实际跨度=实际首尾, 进度=整体%)
+// 某机型某阶段的研发状态: 全部里程碑100%=已完成; 机型被替代=已替代; 有进度=在研; 否则规划中
+function ovStageStatus(machine, cat) {
+  var ov = LIFECYCLE_OVERRIDE[machine];
+  if (ov && (ov.isReplaced || ov.status === '已替代')) return '已替代';
+  var ts = [], all100 = true, hasProg = false;
+  for (var i = 0; i < data.length; i++) {
+    var d = data[i];
+    if (d.resource !== machine) continue;
+    if (getStageCategory(d.task, d) !== cat) continue;
+    ts.push(d);
+    var p = getProgNum(d);
+    if (p < 100) all100 = false;
+    if (p > 0) hasProg = true;
+  }
+  if (!ts.length) return '规划中';
+  if (all100) return '已完成';
+  return hasProg ? '在研' : '规划中';
+}
+// 概览数据: 每个机型按阶段切成若干"段"(资源名不变 → 仍占一行, 每段一个slot)
 function buildOverviewData() {
-  var meta = computeMachineMeta();
   // 反序喂入(渲染时 resources.reverse() 后 2500KW块在最上方)
   var order = CAT_3450.slice().reverse().concat(CAT_2500.slice().reverse());
   var out = [];
   for (var i = 0; i < order.length; i++) {
-    var m = meta[order[i]];
-    if (!m || !m.planStart || !m.planEnd) continue;
-    out.push({
-      resource: m.name,
-      task: m.isReplaced ? '已替代' : m.status,
-      start: m.planStart, end: m.planEnd,
-      actualStart: m.actStart, actualEnd: m.actEnd,
-      progress: m.isReplaced ? null : m.progress,
-      color: overviewColor(m)
-    });
+    var mname = order[i];
+    var list = [];
+    for (var j = 0; j < data.length; j++)
+      if (data[j].resource === mname && data[j].task && data[j].start && data[j].end) list.push(data[j]);
+    if (!list.length) continue;
+    // 按阶段分组(保持首现顺序)
+    var segIdx = {}, segs = [];
+    for (var j = 0; j < list.length; j++) {
+      var d = list[j];
+      var cat = getStageCategory(d.task, d);
+      if (segIdx[cat] == null) { segIdx[cat] = segs.length; segs.push({ cat: cat, tasks: [] }); }
+      segs[segIdx[cat]].tasks.push(d);
+    }
+    var mcat = CATEGORY_MAP[mname] || '3450KW';
+    // 第一遍: 算出每段的计划/实际区间
+    var validSegs = [];
+    for (var s = 0; s < segs.length; s++) {
+      var seg = segs[s], ps = null, pe = null, as = null, ae = null;
+      for (var q = 0; q < seg.tasks.length; q++) {
+        var t = seg.tasks[q];
+        var sd = parseDate(t.start), ed = parseDate(t.end);
+        if (!isNaN(sd) && (ps === null || sd < ps)) ps = sd;
+        if (!isNaN(ed) && (pe === null || ed > pe)) pe = ed;
+        if (t.actualStart) { var ad = parseDate(t.actualStart); if (!isNaN(ad) && (as === null || ad < as)) as = ad; }
+        if (t.actualEnd) { var ad2 = parseDate(t.actualEnd); if (!isNaN(ad2) && (ae === null || ad2 > ae)) ae = ad2; }
+      }
+      if (ps === null || pe === null) continue;
+      seg._ps = ps; seg._pe = pe; seg._as = as; seg._ae = ae;
+      validSegs.push(seg);
+    }
+    // 第二遍: 按条块起始排序(与渲染slot顺序一致, 起始早的层级高覆盖后面的),
+    // 并算每段"可见区"中点作为标签锚点, 避免文字被前面的段块遮住
+    validSegs.sort(function(a, b){ return a._ps - b._ps; });
+    var lastColor = null, covered = [];
+    for (var s = 0; s < validSegs.length; s++) {
+      var seg = validSegs[s];
+      var st = ovStageStatus(mname, seg.cat);
+      var disp = STAGE_DISPLAY[seg.cat] || seg.cat;
+      var col = ovSegColor(mcat, st);
+      var decal = (col === lastColor);   // 相邻段撞色 → 底纹区分
+      lastColor = col;
+      // 条块区间 = 实际优先(与渲染一致)
+      var bs = (seg._as !== null ? seg._as : seg._ps), be = (seg._ae !== null ? seg._ae : seg._pe);
+      var spans = [[bs, be]];
+      for (var c = 0; c < covered.length; c++) {
+        var cs = covered[c][0], ce = covered[c][1];
+        var next = [];
+        for (var sp = 0; sp < spans.length; sp++) {
+          var a = spans[sp][0], b = spans[sp][1];
+          if (ce <= a || cs >= b) { next.push([a, b]); continue; }
+          if (a < cs) next.push([a, cs]);
+          if (ce < b) next.push([ce, b]);
+        }
+        spans = next;
+      }
+      var anchor;
+      if (spans.length) {
+        var best = spans[0];
+        for (var sp2 = 1; sp2 < spans.length; sp2++) if (spans[sp2][1] - spans[sp2][0] > best[1] - best[0]) best = spans[sp2];
+        anchor = new Date((best[0].getTime() + best[1].getTime()) / 2);
+      } else {
+        anchor = new Date((bs.getTime() + be.getTime()) / 2);
+      }
+      covered.push([bs, be]);
+      out.push({
+        resource: mname,
+        stage: seg.cat,
+        task: disp,
+        segLabel: disp + ' ' + st,
+        start: fmtDate(seg._ps), end: fmtDate(seg._pe),
+        actualStart: seg._as === null ? '' : fmtDate(seg._as),
+        actualEnd: seg._ae === null ? '' : fmtDate(seg._ae),
+        progress: null,
+        color: col,
+        _decal: decal,
+        _labelDate: fmtDate(anchor)
+      });
+    }
+    // 第三遍: 同机型内标签防重叠(日期轴最小间隔, 被完全覆盖的段标签会顺延)
+    var lbls = out.slice(out.length - validSegs.length);
+    lbls.sort(function(a, b){ return parseDate(a._labelDate) - parseDate(b._labelDate); });
+    for (var s3 = 1; s3 < lbls.length; s3++) {
+      var prevD = parseDate(lbls[s3-1]._labelDate), curD = parseDate(lbls[s3]._labelDate);
+      var needDays = Math.ceil((String(lbls[s3-1].segLabel).length + String(lbls[s3].segLabel).length) * 0.75) + 2;
+      var minD = new Date(prevD.getTime() + needDays * 86400000);
+      if (curD < minD) lbls[s3]._labelDate = fmtDate(minD);
+    }
   }
   return out;
 }
@@ -1425,17 +1526,21 @@ function refreshChart() {
   document.getElementById('chart').style.height = chartH + 'px';
   document.getElementById('chartWrap').style.height = (chartH + 20) + 'px';
 
+  // v12: "延期"标签同行去重——同一机型行内多个slot文字会重叠时,只保留层级最高(k最小)的那个
+  // key=行带顶行(actualBase), value=已接受标签中心px数组; k递增=层级从高到低,先画先得
+  var delayLabelTaken = {};
+  var DELAY_LABEL_HALF_PX = 18;   // "延期"2字约30px宽,半径15+3px余量
+  var PLOT_W = chartWidth - 35;   // grid.left=5 + grid.right=30
+
   for (var k = 0; k < maxSlots; k++) {
     var planOff = new Array(TOTAL_ROWS).fill(0);
     var planDurItems = new Array(TOTAL_ROWS).fill(null);
 
     var actualOff = new Array(TOTAL_ROWS).fill(0);
     var actualDurItems = new Array(TOTAL_ROWS).fill(null);
-    var actualProgressArr = new Array(TOTAL_ROWS).fill(null);
-    var actualTasks = new Array(TOTAL_ROWS).fill(null);
-    var actualDelayedArr = new Array(TOTAL_ROWS).fill(false);   // v3:该条是否延期(红色+"延期"字)
-    // 仅在条的中间行显示百分比(避免10行重复文字)
-    var labelBand = {};
+    // v11:详情页"延期"文字改用 z=999 的顶层标签层绘制,避免被后面画的条块覆盖
+    var delayOff = new Array(TOTAL_ROWS).fill(0);
+    var delayItems = new Array(TOTAL_ROWS).fill(null);
 
     for (var i = 0; i < N; i++) {
       var t = rows[i][k] || null;
@@ -1452,16 +1557,10 @@ function refreshChart() {
         var hasLabel = (t.progress !== null && t.progress !== undefined && t.progress !== '' && !isNaN(t.progress));
         var progress = hasLabel ? Math.max(0, Math.min(100, parseInt(t.progress, 10))) : null;
         var ar = getActualRange(t);
-        var actStartOff, actDur;
-        if (MODE === 'overview') {
-          // 概览条=完整计划区间(起始日→截止日), 让日期标签完整居中显示
-          actStartOff = startOff;
-          actDur = dur;
-        } else {
-          actStartOff = Math.round((ar.start - globalStart) / 86400000);
-          actDur = Math.round((ar.end - ar.start) / 86400000) + 1;
-          if (actDur <= 0) actDur = 0;
-        }
+        // 概览页条块也取实际起止(getActualRange 无实际日期时自动回落到计划)
+        var actStartOff = Math.round((ar.start - globalStart) / 86400000);
+        var actDur = Math.round((ar.end - ar.start) / 86400000) + 1;
+        if (actDur <= 0) actDur = 0;
 
         var planColor = getColor(t.task, t);
 
@@ -1484,16 +1583,38 @@ function refreshChart() {
           var rr = actualBase + j;
           actualOff[rr] = actStartOff;
           if (actDur > 0 && drawActual) {
-            actualDurItems[rr] = { value: actDur, itemStyle: { color: actualBarColor },
-              label: delayed
-                ? { color: '#F5222D', textBorderColor: '#fff', textBorderWidth: 1.5 }
-                : { color: isLightColor(actualBarColor) ? '#333' : '#fff' } };
-            actualProgressArr[rr] = progress;
-            actualDelayedArr[rr] = delayed;
-            actualTasks[rr] = t;
+            actualDurItems[rr] = {
+              value: actDur,
+              itemStyle: t._decal
+                ? { color: actualBarColor, decal: { symbol: 'rect', symbolSize: 1, dashArrayX: [1, 0], dashArrayY: [2, 3], rotation: -Math.PI / 4, color: 'rgba(255,255,255,0.55)' } }
+                : { color: actualBarColor }
+            };
           }
         }
-        if (drawActual) labelBand[actualBase + Math.floor(BAR_U/2)] = true;
+        // v11:延期文字顶层标签层(与条块同起止, 仅中间行显示文字)
+        // v12:同行文字重叠时去重——多个延期slot的标签中心距<宽度则只留层级最高者
+        if (MODE !== 'overview' && drawActual && delayed && actDur > 0) {
+          var labelCx = 5 + ((actStartOff + actDur / 2) / maxDays) * PLOT_W;  // 标签中心x像素
+          var taken = delayLabelTaken[actualBase] || (delayLabelTaken[actualBase] = []);
+          var collide = false;
+          for (var tc = 0; tc < taken.length; tc++) {
+            if (Math.abs(taken[tc] - labelCx) < DELAY_LABEL_HALF_PX * 2) { collide = true; break; }
+          }
+          if (!collide) {
+            taken.push(labelCx);
+            var midRow = actualBase + Math.floor(BAR_U / 2);
+            for (var j2 = 0; j2 < BAR_U; j2++) {
+              var rrD = actualBase + j2;
+              delayOff[rrD] = actStartOff;
+              delayItems[rrD] = { value: actDur, itemStyle: { color: 'transparent', borderColor: 'transparent' } };
+            }
+            delayItems[midRow].label = {
+              show: true, position: 'inside', formatter: '延期',
+              color: '#F5222D', fontSize: 11, fontWeight: 'bold',
+              textBorderColor: '#fff', textBorderWidth: 2
+            };
+          }
+        }
       }
     }
 
@@ -1509,7 +1630,8 @@ function refreshChart() {
     var planCfg = {
       name: 'planSlot' + k, type: 'bar', stack: 'planStack' + k, data: planDurItems,
       label: { show: false },
-      barCategoryGap: '0%', barGap: '-100%'
+      barCategoryGap: '0%', barGap: '-100%',
+      z: maxSlots - k   // 开始早的slot层级高:重叠时"前面覆盖后面"
     };
     if (k === 0) {
       planCfg.markLine = {
@@ -1538,25 +1660,10 @@ function refreshChart() {
     // 实际 visible series(同色=已完成部分,带百分比;未完成留空)
     var actualCfg = {
       name: 'actualSlot' + k, type: 'bar', stack: 'actualStack' + k, data: actualDurItems,
-      label: {
-        show: true, position: 'inside',
-        formatter: (function(arr, delayedArr, bands, tasksArr) {
-          return function(params) {
-            if (!bands[params.dataIndex]) return '';  // 仅中间行显示一次
-            if (MODE === 'overview') {
-              // 首页概览:条块上显示计划起始日-截止日(不显示进度数字)
-              var ot = tasksArr[params.dataIndex];
-              return ot ? shortDateRange(ot.start, ot.end) : '';
-            }
-            var v = arr[params.dataIndex];
-            if (v === null || v === undefined) return '';  // 无进度=不画条(labelBand 也不标)
-            // v9: 详情页条块不再显示百分比数字, 只标"延期"(进度仍作显示判据)
-            return delayedArr[params.dataIndex] ? '延期' : '';
-          };
-        })(actualProgressArr, actualDelayedArr, labelBand, actualTasks),
-        fontSize: 11, fontWeight: 'bold'
-      },
-      barCategoryGap: '0%', barGap: '-100%'
+      // v11:条内文字统一由顶层标签层绘制(概览=阶段标签, 详情=延期标签),避免被相邻条块遮挡
+      label: { show: false },
+      barCategoryGap: '0%', barGap: '-100%',
+      z: maxSlots - k   // 开始早的slot层级高:重叠时"前面覆盖后面"
     };
     // 概览页无计划条, 时间轴月份线 + 今天红线挂在第0个实际条series上
     if (k === 0 && MODE === 'overview') {
@@ -1568,13 +1675,72 @@ function refreshChart() {
           color: '#333', fontSize: 13,
           formatter: function(params) {
             var d = new Date(globalStart.getTime() + params.value * 86400000);
-            return d.getFullYear() + '年' + (d.getMonth() + 1) + '月';
+            // 标注"1日",避免误以为竖线在月中
+            return d.getFullYear() + '年' + (d.getMonth() + 1) + '月1日';
           }
         },
         data: markLineData
       };
     }
     series.push(actualCfg);
+
+    // v11 详情页: 延期标签顶层(z=999), 与条块同位置, 不会被后面画的条块遮住
+    if (MODE !== 'overview') {
+      series.push({
+        name: '_dlyOff' + k, type: 'bar', stack: 'delayStack' + k, data: delayOff,
+        itemStyle: { color: 'transparent', borderColor: 'transparent' },
+        label: { show: false }, barCategoryGap: '0%', barGap: '-100%',
+        silent: true, tooltip: { show: false }, z: 999
+      });
+      series.push({
+        name: '_dlyDur' + k, type: 'bar', stack: 'delayStack' + k, data: delayItems,
+        label: { show: false }, barCategoryGap: '0%', barGap: '-100%',
+        silent: true, tooltip: { show: false }, z: 999
+      });
+    }
+
+    // 概览页: 每slot再加一对透明"标签条"(z最高), 段标签画在其上 —— 不被任何段块遮挡
+    if (MODE === 'overview') {
+      var labOff = new Array(TOTAL_ROWS).fill(0);
+      var labDurItems = new Array(TOTAL_ROWS).fill(null);
+      var labTextMap = {};
+      for (var li = 0; li < N; li++) {
+        var lt = rows[li][k] || null;
+        if (!lt || !lt._labelDate) continue;
+        var ld = parseDate(lt._labelDate);
+        if (isNaN(ld)) continue;
+        var w = Math.ceil(String(lt.segLabel || '').length * 0.75) + 2;
+        var aOff = Math.round((ld - globalStart) / 86400000) - Math.floor(w / 2);
+        if (aOff < 0) aOff = 0;
+        for (var lj = 0; lj < BAR_U; lj++) {
+          var rr2 = rowBase[li] + lj;   // 概览页 actualBase == rowBase[i]
+          labOff[rr2] = aOff;
+          labDurItems[rr2] = {
+            value: w,
+            itemStyle: { color: 'transparent', borderColor: 'transparent' },
+            // 按段块底色自适应: 浅底深字/深底白字, 无描边
+            label: { color: isLightColor(lt.color) ? '#262626' : '#fff' }
+          };
+        }
+        labTextMap[rowBase[li] + Math.floor(BAR_U / 2)] = lt.segLabel || '';
+      }
+      series.push({
+        name: '_labOff' + k, type: 'bar', stack: 'labStack' + k, data: labOff,
+        itemStyle: { color: 'transparent', borderColor: 'transparent' },
+        label: { show: false }, barCategoryGap: '0%', barGap: '-100%', silent: true, tooltip: { show: false }, z: 999
+      });
+      series.push({
+        name: '_labDur' + k, type: 'bar', stack: 'labStack' + k, data: labDurItems,
+        label: {
+          show: true, position: 'inside',
+          formatter: (function(map) {
+            return function(params) { return map[params.dataIndex] || ''; };
+          })(labTextMap),
+          fontSize: 11, fontWeight: 'bold'
+        },
+        barCategoryGap: '0%', barGap: '-100%', silent: true, tooltip: { show: false }, z: 999
+      });
+    }
   }
 
   document.getElementById('chart').style.width = chartWidth + 'px';
@@ -2125,4 +2291,4 @@ renderImprovementsTable();
 </script>
 
 
-<div style="position: fixed; right: 6px; bottom: 3px; font-size: 10px; color: rgb(200, 201, 204); z-index: 99999; pointer-events: none;">v20260924v4a</div><div style="position: fixed; right: 6px; bottom: 3px; font-size: 10px; color: rgb(200, 201, 204); z-index: 99999; pointer-events: none;">v20261014v2</div><div style="position: fixed; right: 6px; bottom: 3px; font-size: 10px; color: rgb(200, 201, 204); z-index: 99999; pointer-events: none;">v20261015v1</div><div style="position: fixed; right: 6px; bottom: 3px; font-size: 10px; color: rgb(200, 201, 204); z-index: 99999; pointer-events: none;">v20261015v8</div><div style="position: fixed; right: 6px; bottom: 3px; font-size: 10px; color: rgb(200, 201, 204); z-index: 99999; pointer-events: none;">v20261015v8</div><div style="position: fixed; right: 6px; bottom: 3px; font-size: 10px; color: rgb(200, 201, 204); z-index: 99999; pointer-events: none;">v20261016v1</div></body></html>
+<div style="position: fixed; right: 6px; bottom: 3px; font-size: 10px; color: rgb(200, 201, 204); z-index: 99999; pointer-events: none;">v20261021v2</div></body></html>
