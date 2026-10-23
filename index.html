@@ -174,6 +174,10 @@ var BUILD_ID = '20261021v2';
   .page-title { padding: 6px 4px 10px; font-size: 18px; }
   .page-title-machine { font-weight: bold; color: #1F78B4; }
   .page-title-sub { color: #909399; font-size: 14px; margin-left: 6px; }
+  /* v20: 单机型阶段视图的面包屑返回链接(替代原页签行的原生按钮) */
+  .back-link { color: #409EFF; cursor: pointer; font-size: 14px; text-decoration: none; margin-right: 2px; }
+  .back-link:hover { color: #185FA5; text-decoration: underline; }
+  .crumb-sep { color: #dcdfe6; margin: 0 10px; font-size: 14px; }
 
   /* ===== v6: 升级点矩阵表格 ===== */
   .matrix-title { font-size: 15px; font-weight: bold; color: #303133; margin-bottom: 10px; padding-left: 4px; border-left: 4px solid #1F78B4; padding-left: 10px; }
@@ -185,6 +189,67 @@ var BUILD_ID = '20261021v2';
   .matrix-machine { font-weight: 600; color: #303133; background: #f5f7fa !important; border-right: 1px solid #ebeef5; white-space: nowrap; }
   .matrix-stage { text-align: center; }
   .matrix-upgrade { color: #606266; line-height: 1.5; }
+
+  /* ===== 表达优化: 图注 / 机型链接 / 计划·实际行标签 ===== */
+  .chart-note { font-size: 12px; color: #909399; text-align: center; margin: -8px 0 14px; line-height: 1.6; }
+  .machine-link {
+    cursor: pointer; text-decoration: none; color: #1F78B4;
+    border-bottom: 1px dashed #1F78B4; padding: 1px 4px; border-radius: 3px;
+    transition: background .15s, color .15s;
+  }
+  .machine-link:hover { color: #B37508; background: #FFF7E6; border-bottom-color: #B37508; }
+  .ml-arrow { font-size: 10px; margin-right: 3px; opacity: .8; }
+  .row-tag {
+    font-size: 11px; color: #909399; font-weight: 400; margin-left: 6px;
+    background: #f5f7fa; border: 1px solid #ebeef5; border-radius: 3px; padding: 0 5px;
+  }
+  /* ===== v19 风险看板 + 检索筛选栏 ===== */
+  .risk-board { display: flex; gap: 12px; flex-wrap: wrap; margin: 10px 0 2px; }
+  /* v20 卡片改版: 左侧色条 + 横排「数字 + 标签」, 零值置灰降噪 */
+  .risk-card { position: relative; display: flex; align-items: center; gap: 12px;
+               border-radius: 8px; padding: 10px 20px 10px 16px; cursor: pointer;
+               background: #fff; border: 1px solid #ebeef5;
+               transition: box-shadow .15s ease, transform .15s ease; }
+  .risk-card::before { content: ''; position: absolute; left: 0; top: 9px; bottom: 9px;
+                       width: 4px; border-radius: 0 3px 3px 0; }
+  .risk-card:hover { border-color: #c0c4cc; box-shadow: 0 2px 10px rgba(0,0,0,.08); transform: translateY(-1px); }
+  .risk-card.rc-open { border-color: #409EFF; box-shadow: 0 2px 10px rgba(64,158,255,.28); }
+  .risk-card.rc-open::before { background: #409EFF !important; }
+  .risk-card .rc-num { font-size: 22px; font-weight: 700; line-height: 1; }
+  .risk-card .rc-label { font-size: 12px; color: #909399; }
+  /* v20: 可点击暗示 —— 右侧箭头, 展开时旋转 90° */
+  .risk-card .rc-arrow { font-size: 10px; color: #c0c4cc; transition: transform .15s ease; }
+  .risk-card:hover .rc-arrow { color: #909399; }
+  .risk-card.rc-open .rc-arrow { color: #409EFF; transform: rotate(90deg); }
+  .risk-card.rc-delay::before { background: #F5222D; }
+  .risk-card.rc-delay .rc-num { color: #F5222D; }
+  .risk-card.rc-due::before { background: #E69508; }
+  .risk-card.rc-due .rc-num { color: #E69508; }
+  .risk-card.rc-stale::before { background: #B45309; }
+  .risk-card.rc-stale .rc-num { color: #B45309; }
+  /* 数量为 0: 色条与数字都置灰, 有风险才「亮灯」 */
+  .risk-card.rc-zero::before { background: #dcdfe6 !important; }
+  .risk-card.rc-zero .rc-num { color: #c0c4cc; }
+  .risk-detail { display: none; margin: 6px 0 8px; padding: 8px 10px; border: 1px dashed #ebeef5;
+                 border-radius: 8px; background: #fafbfc; font-size: 12px; line-height: 1.8; }
+  .risk-chip { display: inline-block; margin: 3px 6px 3px 0; padding: 2px 9px; border-radius: 12px;
+               background: #f0f2f5; color: #303133; cursor: pointer; }
+  .risk-chip:hover { background: #E6F1FB; color: #185FA5; }
+  /* v20 顶部一行: 左看板 + 右工具区; 放不下时自动换行 */
+  .top-row { display: flex; align-items: flex-end; justify-content: space-between;
+             gap: 16px; flex-wrap: wrap; margin: 4px 0 16px; }
+  .risk-board { display: flex; gap: 12px; flex-wrap: wrap; }
+  .filter-tools { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  /* v20 搜索组: 输入框 + 放大镜图标按钮拼成一条搜索栏(点图标或回车才搜索) */
+  .search-group { display: flex; }
+  .search-group .f-search { width: 230px; border-radius: 4px 0 0 4px; }
+  .search-btn { display: flex; align-items: center; justify-content: center;
+                padding: 0 11px; height: 30px; border: 1px solid #dcdfe6; border-left: none;
+                background: #fff; color: #606266; border-radius: 0 4px 4px 0; cursor: pointer; }
+  .search-btn:hover { color: #409EFF; background: #F0F7FF; }
+  .f-search { padding: 5px 10px; border: 1px solid #dcdfe6; border-radius: 4px; font-size: 13px; height: 30px; box-sizing: border-box; }
+  .f-sel { padding: 5px 8px; height: 30px; box-sizing: border-box; border: 1px solid #dcdfe6; border-radius: 4px; font-size: 13px; background: #fff; }
+  .f-info { font-size: 12px; color: #909399; }
 </style>
 </head>
 <body>
@@ -195,10 +260,41 @@ var BUILD_ID = '20261021v2';
     <div class="tab active" data-mode="overview">📊 全局概览</div>
     <div class="tab" data-mode="d2500">2500KW详情</div>
     <div class="tab" data-mode="d3450">3450KW详情</div>
-    <button id="backBtn" style="margin-left: 14px; font-size: 12px; padding: 2px 10px; cursor: pointer; display: none;">← 返回 3450KW 机型列表</button>
   </div>
 
   <div id="pageTitle" class="page-title" style="display: none;"><span class="page-title-machine">1750kW-V2-构网</span> <span class="page-title-sub">各阶段进度与升级点</span></div>
+
+  <!-- ===== v20: 顶部一行: 左侧风险看板 + 右侧检索筛选(避免右侧大片留白) ===== -->
+  <div class="top-row">
+    <div id="riskBoard" class="risk-board"></div>
+    <div class="filter-tools">
+      <div class="search-group">
+        <input id="searchInput" class="f-search" type="text" placeholder="搜索机型 / 阶段 / 里程碑 / 升级点" onkeydown="if(event.key==='Enter')onFilterChange()">
+        <button class="search-btn" onclick="onFilterChange()" title="搜索" aria-label="搜索">
+          <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
+            <circle cx="7" cy="7" r="4.6" fill="none" stroke="currentColor" stroke-width="1.8"></circle>
+            <line x1="10.6" y1="10.6" x2="14.5" y2="14.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></line>
+          </svg>
+        </button>
+      </div>
+      <select id="statusSel" class="f-sel" onchange="onFilterChange()">
+        <option value="all">全部阶段</option>
+        <option value="delayed">有延期</option>
+        <option value="due">本周到期</option>
+        <option value="stale">超30天未闭环</option>
+        <option value="wip">进行中</option>
+        <option value="done">已闭环阶段</option>
+      </select>
+      <select id="sortSel" class="f-sel" onchange="onFilterChange()">
+        <option value="risk">排序：风险优先（延期↓）</option>
+        <option value="planEnd">排序：计划结束↑</option>
+        <option value="progress">排序：进度↑</option>
+        <option value="default">排序：默认</option>
+      </select>
+      <span id="filterInfo" class="f-info"></span>
+    </div>
+  </div>
+  <div id="riskDetail" class="risk-detail"></div>
 
   <div class="chart-box" style="position:relative">
     <div id="yLabels" style="top: 20px; left: 20px; width: 150px; height: 667px; display: block;"><div class="y-label-row" style="position: absolute; left: 0px; right: 0px; height: 24px; top: 98px; font-weight: bold;"><a href="javascript:void(0)" title="点击查看该机型各阶段进度" style="cursor: pointer; text-decoration: none; color: rgb(31, 120, 180); border-bottom: 1px dashed rgb(31, 120, 180);">2500kW-V1-跟网</a> <span class="lc-badge lc-b-dev">在研</span></div><div class="y-label-row" style="position: absolute; left: 0px; right: 0px; height: 24px; top: 166px; font-weight: bold;"><a href="javascript:void(0)" title="点击查看该机型各阶段进度" style="cursor: pointer; text-decoration: none; color: rgb(31, 120, 180); border-bottom: 1px dashed rgb(31, 120, 180);">2500kW-V2-跟网</a> <span class="lc-badge lc-b-dev">在研</span></div><div class="y-label-row" style="position: absolute; left: 0px; right: 0px; height: 24px; top: 234px; font-weight: bold;"><a href="javascript:void(0)" title="点击查看该机型各阶段进度" style="cursor: pointer; text-decoration: none; color: rgb(31, 120, 180); border-bottom: 1px dashed rgb(31, 120, 180);">1250kW-V2-构网</a> <span class="lc-badge lc-b-dev">在研</span></div><div class="y-label-row" style="position: absolute; left: 0px; right: 0px; height: 24px; top: 370px; font-weight: bold;"><a href="javascript:void(0)" title="点击查看该机型各阶段进度" style="cursor: pointer; text-decoration: none; color: rgb(31, 120, 180); border-bottom: 1px dashed rgb(31, 120, 180);">3450kW-V1-跟网</a> <span class="lc-badge lc-b-dev">在研</span></div><div class="y-label-row" style="position: absolute; left: 0px; right: 0px; height: 24px; top: 438px; font-weight: bold;"><a href="javascript:void(0)" title="点击查看该机型各阶段进度" style="cursor: pointer; text-decoration: none; color: rgb(31, 120, 180); border-bottom: 1px dashed rgb(31, 120, 180);">3450kW-V2-跟网</a> <span class="lc-badge lc-b-dev">在研</span></div><div class="y-label-row" style="position: absolute; left: 0px; right: 0px; height: 24px; top: 506px; font-weight: bold;"><a href="javascript:void(0)" title="点击查看该机型各阶段进度" style="cursor: pointer; text-decoration: none; color: rgb(31, 120, 180); border-bottom: 1px dashed rgb(31, 120, 180);">1750kW-V2-构网</a> <span class="lc-badge lc-b-dev">在研</span></div><div class="y-label-row" style="position: absolute; left: 0px; right: 0px; height: 24px; top: 574px; font-weight: bold;"><a href="javascript:void(0)" title="点击查看该机型各阶段进度" style="cursor: pointer; text-decoration: none; color: rgb(31, 120, 180); border-bottom: 1px dashed rgb(31, 120, 180);">1000kW-V2</a> <span class="lc-badge lc-b-dev">在研</span></div><div style="position: absolute; left: 0px; right: 0px; top: 30px; height: 24px; display: flex; align-items: center; font-size: 13px; font-weight: bold; color: rgb(179, 117, 8);">── 2500KW（含1250kW） ──</div><div style="position: absolute; left: 0px; right: 0px; top: 302px; height: 24px; display: flex; align-items: center; font-size: 13px; font-weight: bold; color: rgb(31, 120, 180);">── 3450KW（含1750/1000kW） ──</div></div>
@@ -217,6 +313,7 @@ var BUILD_ID = '20261021v2';
     <button onclick="document.getElementById('csvInput').click()">📥 导入 CSV</button>
     <input type="file" id="csvInput" accept=".csv" style="display:none" onchange="importCSV(event)">
     <button onclick="exportCSV()">📊 导出 CSV</button>
+    <button onclick="exportPNG()">🖼 导出 PNG</button>
   </div>
 </div>
 
@@ -471,6 +568,20 @@ function isDelayed(t) {
   if (getOverdueDays(t) >= DELAY_THRESHOLD_DAYS && getProgNum(t) < 100) return true;  // 规则2
   return false;
 }
+// v19: 提前天数 = 计划结束 - 实际结束(正数=提前完工); 与延期对称, 同样用 7 天阈值避免噪音
+function getAheadDays(t) {
+  if (!t || !t.actualEnd || !t.end) return 0;
+  var planEnd = parseDate(t.end);
+  var actualEnd = parseDate(t.actualEnd);
+  if (isNaN(planEnd) || isNaN(actualEnd)) return 0;
+  return Math.round((planEnd - actualEnd) / 86400000);
+}
+function isAhead(t) {
+  if (!t || isDelayed(t)) return false;
+  // 与延期规则1对称: 只要填了实际结束日期即视为完工, 不依赖 progress 字段(避免漏标)
+  if (!t.actualEnd) return false;
+  return getAheadDays(t) >= DELAY_THRESHOLD_DAYS;
+}
 
 // ===== v4 三页模式(概览/2500KW/3450KW) =====
 var CAT_2500 = ['2500kW-V1-跟网', '2500kW-V2-跟网', '1250kW-V2-构网'];
@@ -482,6 +593,11 @@ for (var _ci = 0; _ci < CAT_3450.length; _ci++) CATEGORY_MAP[CAT_3450[_ci]] = '3
 // 例: LIFECYCLE_OVERRIDE['2500kW-V1-跟网'] = { status: '已替代', isReplaced: true, replacedBy: '2500kW-V2-跟网' };
 var LIFECYCLE_OVERRIDE = {};
 var MODE = 'overview';
+// 记住当前 Tab: 会话内刷新后停留在上次视图
+try {
+  var _savedMode = sessionStorage.getItem('wb_mode');
+  if (_savedMode === 'overview' || _savedMode === 'd2500' || _savedMode === 'd3450' || (_savedMode && _savedMode.indexOf('stage-') === 0)) MODE = _savedMode;
+} catch(eMode) {}
 var CURRENT_META = null;
 
 // ===== v5 阶段视图(行=阶段, 左列=升级点, 上条=计划跨度/下条=实际平均进度) =====
@@ -628,7 +744,7 @@ function collectUpgradeInfo(resources) {
 function renderStageYLabels(resources) {
   var box = document.getElementById('yLabels');
   box.innerHTML = '';
-  var UNIT = 2, GRID_TOP = 30;
+  var UNIT = 2, GRID_TOP = 46;
   var BAR_H = UNIT * 6, INNER_GAP = UNIT * 4, GROUP_GAP = UNIT * 20;
   var GROUP_H = BAR_H*2 + INNER_GAP + GROUP_GAP;
   box.style.top = '20px'; box.style.left = '20px'; box.style.width = '300px';
@@ -683,7 +799,7 @@ function getMachineStageUpgrade(machine, cat) {
 function renderSingleStageLabels(resources) {
   var box = document.getElementById('yLabels');
   box.innerHTML = '';
-  var UNIT = 2, GRID_TOP = 30;
+  var UNIT = 2, GRID_TOP = 46;
   var BAR_H = UNIT * 12, INNER_GAP = UNIT * 4, GROUP_GAP = UNIT * 32;
   var GROUP_H = BAR_H * 2 + INNER_GAP + GROUP_GAP;
   var machine = MODE.slice(6);
@@ -954,6 +1070,258 @@ function getModeData() {
       if (data[j].resource === rev[i]) out.push(data[j]);
   return out;
 }
+
+// ===== v19: 阶段粒度风险计算 + 检索/筛选/排序 =====
+// 风险项粒度 = (机型 + 阶段), 不是整机也不是单个里程碑
+var FILTER_TEXT = '';
+var FILTER_STATUS = 'all';
+var SORT_KEY = 'risk';
+var RISK_OPEN = null;      // 当前展开的风险卡片: 'delay' | 'due' | 'stale' | null
+var FILTER_INFO = '';
+
+function _today0() {
+  var n = new Date();
+  return new Date(n.getFullYear(), n.getMonth(), n.getDate());
+}
+function _weekRange() {
+  var t = _today0();
+  var dow = (t.getDay() + 6) % 7;                 // 周一=0
+  var mon = new Date(t); mon.setDate(t.getDate() - dow);
+  var sun = new Date(mon); sun.setDate(mon.getDate() + 6);
+  return { s: mon, e: sun };
+}
+
+// 每个 (机型 · 阶段) 一个单元, 计算: 计划最后一环日期/延期天数/是否闭环/本周到期/超30天未闭环
+function stageUnits() {
+  var out = [], map = {};
+  if (!data) return out;
+  for (var i = 0; i < data.length; i++) {
+    var d = data[i];
+    if (!d || !d.task || !String(d.task).trim()) continue;
+    var cat = getStageCategory(d.task, d);
+    var disp = STAGE_DISPLAY[cat] || cat;
+    var key = d.resource + '||' + disp;
+    if (!map[key]) { map[key] = { resource: d.resource, stage: disp, cat: cat, tasks: [] }; out.push(map[key]); }
+    map[key].tasks.push(d);
+  }
+  var t0 = _today0(), wk = _weekRange();
+  for (var ui = 0; ui < out.length; ui++) {
+    var u = out[ui], lastEnd = null, maxDelay = 0, maxOverdue = 0, delayed = false, progSum = 0, progCnt = 0, closed = true;
+    for (var j = 0; j < u.tasks.length; j++) {
+      var t = u.tasks[j];
+      var pe = parseDate(t.end);
+      if (!isNaN(pe) && (lastEnd === null || pe > lastEnd)) lastEnd = pe;   // 计划最后一环
+      if (isDelayed(t)) {
+        delayed = true;
+        if (getDelayDays(t) > maxDelay) maxDelay = getDelayDays(t);
+        if (getOverdueDays(t) > maxOverdue) maxOverdue = getOverdueDays(t);
+      }
+      if (t.progress !== null && t.progress !== undefined && t.progress !== '' && !isNaN(t.progress)) {
+        progSum += Number(t.progress); progCnt++;
+      }
+      if (getProgNum(t) < 100) closed = false;
+    }
+    u.planEnd = lastEnd;
+    u.delayed = delayed;
+    u.maxDelayDays = maxDelay;
+    u.maxOverdueDays = maxOverdue;
+    u.riskDays = Math.max(maxDelay, maxOverdue);
+    u.closed = closed && progCnt > 0;
+    u.progress = progCnt ? Math.round(progSum / progCnt) : 0;
+    u.dueThisWeek = !!lastEnd && lastEnd >= wk.s && lastEnd <= wk.e;
+    u.overdueDays = lastEnd ? Math.round((t0 - lastEnd) / 86400000) : 0;
+    u.stale = (!u.closed) && u.overdueDays > 30;
+  }
+  return out;
+}
+
+// 机型级聚合指标(用于排序与状态筛选)
+function machineMetrics() {
+  var units = stageUnits(), m = {};
+  for (var i = 0; i < units.length; i++) {
+    var u = units[i];
+    if (!m[u.resource]) m[u.resource] = { riskDays: 0, maxDelay: 0, lastPlanEnd: null, progSum: 0, progCnt: 0,
+                                          hasDelayed: false, dueWeek: false, stale: false, closed: true, hasClosed: false, units: [] };
+    var r = m[u.resource];
+    r.units.push(u);
+    if (u.riskDays > r.riskDays) r.riskDays = u.riskDays;
+    if (u.maxDelayDays > r.maxDelay) r.maxDelay = u.maxDelayDays;
+    if (u.planEnd && (!r.lastPlanEnd || u.planEnd > r.lastPlanEnd)) r.lastPlanEnd = u.planEnd;
+    if (u.delayed) r.hasDelayed = true;
+    if (u.dueThisWeek) r.dueWeek = true;
+    if (u.stale) r.stale = true;
+    if (!u.closed) r.closed = false;
+    if (u.closed) r.hasClosed = true;   // v20: 存在已闭环阶段(整机长期升级, 很少整机全闭环)
+    r.progSum += u.progress; r.progCnt++;
+  }
+  for (var k in m) m[k].progress = m[k].progCnt ? Math.round(m[k].progSum / m[k].progCnt) : 0;
+  return m;
+}
+
+// 机型是否命中搜索词(机型名 / 阶段 / 里程碑 / 升级点)
+function machineMatchesText(res) {
+  if (!FILTER_TEXT) return true;
+  var q = String(FILTER_TEXT).toLowerCase();
+  if (String(res).toLowerCase().indexOf(q) !== -1) return true;
+  if (!data) return false;
+  for (var i = 0; i < data.length; i++) {
+    if (data[i].resource !== res) continue;
+    var s = [data[i].task, data[i].stage, data[i].upgrade].join(' ').toLowerCase();
+    if (s.indexOf(q) !== -1) return true;
+  }
+  return false;
+}
+function unitMatchesText(u) {
+  if (!FILTER_TEXT) return true;
+  var q = String(FILTER_TEXT).toLowerCase();
+  if (String(u.resource).toLowerCase().indexOf(q) !== -1) return true;
+  if (String(u.stage).toLowerCase().indexOf(q) !== -1) return true;
+  for (var j = 0; j < u.tasks.length; j++) {
+    var s = [u.tasks[j].task, u.tasks[j].upgrade].join(' ').toLowerCase();
+    if (s.indexOf(q) !== -1) return true;
+  }
+  return false;
+}
+function unitMatchStatus(u) {
+  if (FILTER_STATUS === 'delayed') return u.delayed;
+  if (FILTER_STATUS === 'due') return u.dueThisWeek;
+  if (FILTER_STATUS === 'stale') return u.stale;
+  if (FILTER_STATUS === 'done') return u.closed;
+  if (FILTER_STATUS === 'wip') return (!u.closed) && u.progress > 0;
+  return true;
+}
+
+// v20e: 按阶段状态过滤任务(与 stageUnits 同一套阶段归类)
+function filterTasksByStatus(srcData) {
+  var units = stageUnits(), flag = {};
+  for (var i = 0; i < units.length; i++) flag[units[i].resource + "||" + units[i].stage] = unitMatchStatus(units[i]);
+  var out = [];
+  for (var j = 0; j < srcData.length; j++) {
+    var d = srcData[j];
+    if (!d || !d.task || !String(d.task).trim()) continue;
+    var cat = getStageCategory(d.task, d);
+    var disp = STAGE_DISPLAY[cat] || cat;
+    if (flag[d.resource + '||' + disp]) out.push(d);
+  }
+  return out;
+}
+
+// 机型列表: 先筛选, 再排序(概览页按大类分组内排序, 保证"2500KW/3450KW"分组标题仍正确)
+function filterSortMachines(resources) {
+  var mets = machineMetrics();
+  var total = resources.length;
+  var list = [];
+  for (var i = 0; i < resources.length; i++) {
+    var r = resources[i], m = mets[r] || {};
+    if (!machineMatchesText(r)) continue;
+    if (FILTER_STATUS === 'delayed' && !m.hasDelayed) continue;
+    if (FILTER_STATUS === 'due' && !m.dueWeek) continue;
+    if (FILTER_STATUS === 'stale' && !m.stale) continue;
+    if (FILTER_STATUS === 'done' && !m.hasClosed) continue;
+    if (FILTER_STATUS === 'wip' && !(m.closed === false && m.progress > 0)) continue;
+    list.push(r);
+  }
+  if (SORT_KEY !== 'default') {
+    var cmp = function(a, b) {
+      var ma = mets[a] || {}, mb = mets[b] || {};
+      if (SORT_KEY === 'risk') return (mb.riskDays || 0) - (ma.riskDays || 0);
+      if (SORT_KEY === 'planEnd') return (ma.lastPlanEnd ? ma.lastPlanEnd.getTime() : 1e15) - (mb.lastPlanEnd ? mb.lastPlanEnd.getTime() : 1e15);
+      if (SORT_KEY === 'progress') return (ma.progress || 0) - (mb.progress || 0);
+      return 0;
+    };
+    if (MODE === 'overview') {
+      var g1 = [], g2 = [];
+      for (var k = 0; k < list.length; k++) (CATEGORY_MAP[list[k]] === '2500KW' ? g1 : g2).push(list[k]);
+      g1.sort(cmp); g2.sort(cmp);
+      list = g1.concat(g2);
+    } else {
+      list.sort(cmp);
+    }
+  }
+  FILTER_INFO = '显示 ' + list.length + ' / ' + total + ' 个机型';
+  return list;
+}
+
+// 单机型阶段图: 阶段行按搜索/状态过滤(阶段粒度)
+function filterStageRows(rows, srcData) {
+  var units = stageUnits();
+  var byName = {};
+  for (var i = 0; i < units.length; i++) byName[units[i].stage] = units[i];
+  var out = [];
+  for (var j = 0; j < rows.length; j++) {
+    var u = byName[rows[j]];
+    if (u && !unitMatchesText(u)) continue;
+    if (u && !unitMatchStatus(u)) continue;
+    out.push(rows[j]);
+  }
+  if (out.length !== rows.length) FILTER_INFO = '显示 ' + out.length + ' / ' + rows.length + ' 个阶段';
+  else FILTER_INFO = '';
+  return out;
+}
+
+function onFilterChange() {
+  var si = document.getElementById('searchInput');
+  var ss = document.getElementById('statusSel');
+  var so = document.getElementById('sortSel');
+  FILTER_TEXT = si ? String(si.value || '').trim() : '';
+  FILTER_STATUS = ss ? ss.value : 'all';
+  SORT_KEY = so ? so.value : 'risk';
+  refreshChart();
+}
+
+// ===== 风险看板(阶段粒度, 点击展开清单并可跳转机型阶段图) =====
+function renderRiskBoard() {
+  var box = document.getElementById('riskBoard');
+  if (!box) return;
+  var units = stageUnits();
+  var delay = [], due = [], stale = [];
+  for (var i = 0; i < units.length; i++) {
+    if (units[i].delayed) delay.push(units[i]);
+    if (units[i].dueThisWeek) due.push(units[i]);
+    if (units[i].stale) stale.push(units[i]);
+  }
+  var byRisk = function(a, b) { return b.riskDays - a.riskDays; };
+  delay.sort(byRisk); stale.sort(function(a, b) { return b.overdueDays - a.overdueDays; });
+
+  var html = '';
+  html += riskCard('delay', 'rc-delay', delay.length, '阶段延期');
+  html += riskCard('due', 'rc-due', due.length, '本周到期');
+  html += riskCard('stale', 'rc-stale', stale.length, '超30天未闭环');
+  box.innerHTML = html;
+
+  var det = document.getElementById('riskDetail');
+  if (!det) return;
+  if (!RISK_OPEN) { det.style.display = 'none'; det.innerHTML = ''; return; }
+  var src = (RISK_OPEN === 'delay') ? delay : (RISK_OPEN === 'due' ? due : stale);
+  if (!src.length) { det.style.display = 'block'; det.innerHTML = '<span style="color:#909399">没有符合条件的阶段</span>'; return; }
+  var chips = '';
+  for (var k = 0; k < src.length; k++) {
+    var u = src[k];
+    var extra = (RISK_OPEN === 'delay') ? ('延期 ' + u.riskDays + ' 天')
+              : (RISK_OPEN === 'due') ? ('计划最后一环 ' + fmtDateShort(u.planEnd))
+              : ('超期 ' + u.overdueDays + ' 天');
+    chips += '<span class="risk-chip" title="点击查看该机型各阶段进度" onclick="openMachineStage(\''
+           + String(u.resource).replace(/'/g, "\\'") + '\')">' + escHtml(u.resource) + ' · ' + escHtml(u.stage)
+           + '<span style="color:#909399">（' + extra + '）</span></span>';
+  }
+  det.style.display = 'block';
+  det.innerHTML = chips;
+}
+function riskCard(key, cls, num, label) {
+  // v20: 数量为 0 加 rc-zero 置灰, 打开态不再压背景色(保留色条语义), 右侧箭头暗示可展开
+  return '<div class="risk-card ' + cls + (num === 0 ? ' rc-zero' : '') + (RISK_OPEN === key ? ' rc-open' : '') + '" onclick="toggleRisk(\'' + key + '\')">'
+       + '<div class="rc-num">' + num + '</div>'
+       + '<div class="rc-label">' + label + '</div>'
+       + '<span class="rc-arrow">&#9656;</span></div>';
+}
+function toggleRisk(key) {
+  RISK_OPEN = (RISK_OPEN === key) ? null : key;
+  renderRiskBoard();
+}
+function fmtDateShort(d) {
+  if (!d || isNaN(d)) return '—';
+  return (d.getMonth() + 1) + '/' + d.getDate();
+}
 function renderOverviewLegend() {
   var box = document.getElementById('legendBox');
   box.innerHTML = '';
@@ -1032,7 +1400,7 @@ function renderUpgradeMatrix() {
       var st = stageMatrixStyle(cat);
       var active = cat ? isStageActive(machine, cat) : false;
       var stageCell = cat
-        ? '<span style="background:' + st.bg + ';color:' + (active ? '#F5222D' : st.fg) +
+        ? '<span style="background:' + st.bg + ';color:' + (active ? '#B37508' : st.fg) +   // v17: 进行中改用琥珀色, 红色保留给「延期/风险」
           ';padding:3px 12px;border-radius:12px;font-weight:600;display:inline-block;">' + escHtml(disp) + '</span>'
         : '<span style="color:#bbb;">—</span>';
       html += '<td class="matrix-stage">' + stageCell + '</td>';
@@ -1106,6 +1474,13 @@ function resetData() {
   renderTable(); refreshChart();
 }
 
+// CSV 字段转义: 含逗号/引号/换行的字段用双引号包裹(导出→导入往返不丢列)
+function csvEscape(v) {
+  v = String(v == null ? '' : v);
+  if (/[",\r\n]/.test(v)) return '"' + v.replace(/"/g, '""') + '"';
+  return v;
+}
+
 function exportCSV() {
   // 双行格式:每个任务两行(计划行 + 实际行),阶段与任务分列
   var csv = '\ufeff资源,类型,阶段,任务,开始,结束,进度,升级点\n';
@@ -1113,8 +1488,8 @@ function exportCSV() {
     var r = data[i];
     var stg = r.stage || '';
     var p = (r.progress != null && r.progress !== '' && !isNaN(r.progress)) ? r.progress : '';
-    csv += r.resource + ',计划,' + stg + ',' + r.task + ',' + r.start + ',' + r.end + ',,' + (r.upgrade || '') + '\n';
-    csv += r.resource + ',实际,' + stg + ',' + r.task + ',' + (r.actualStart || r.start) + ',' + (r.actualEnd || r.end) + ',' + p + ',\n';
+    csv += csvEscape(r.resource) + ',计划,' + csvEscape(stg) + ',' + csvEscape(r.task) + ',' + r.start + ',' + r.end + ',,' + csvEscape(r.upgrade || '') + '\n';
+    csv += csvEscape(r.resource) + ',实际,' + csvEscape(stg) + ',' + csvEscape(r.task) + ',' + (r.actualStart || r.start) + ',' + (r.actualEnd || r.end) + ',' + p + ',\n';
   }
   var blob = new Blob([csv], {type:'text/csv'});
   var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'gantt_v3_data.csv'; a.click();
@@ -1164,6 +1539,26 @@ function normDateStr(s) {
   return (s || '').replace(/\//g, '-').replace(/年|月/g, '-').replace(/日/g, '').trim();
 }
 
+// 带引号的 CSV 行解析: 支持 "文本,含逗号" 与 "" 转义引号, 避免升级点含逗号时列错位
+function parseCSVLine(line, delim) {
+  var out = [], cur = '', inQ = false;
+  for (var i = 0; i < line.length; i++) {
+    var ch = line[i];
+    if (inQ) {
+      if (ch === '"') {
+        if (line[i+1] === '"') { cur += '"'; i++; }
+        else inQ = false;
+      } else cur += ch;
+    } else {
+      if (ch === '"') inQ = true;
+      else if (ch === delim) { out.push(cur); cur = ''; }
+      else cur += ch;
+    }
+  }
+  out.push(cur);
+  return out;
+}
+
 function parseAndApplyCSV(text) {
   var lines = text.trim().split(/\r?\n/).filter(function(l){ return l.trim(); });
   if (lines.length < 2) { alert('文件为空或只有表头,共识别到 ' + lines.length + ' 行'); return; }
@@ -1171,7 +1566,7 @@ function parseAndApplyCSV(text) {
   var delim = ',';
   if ((header.match(/;/g) || []).length > (header.match(/,/g) || []).length) delim = ';';
   if ((header.match(/\t/g) || []).length > (header.match(delim === ',' ? /,/g : delim === ';' ? /;/g : /\t/g) || []).length) delim = '\t';
-  var cols = header.split(delim).map(function(s){ return s.trim().replace(/^\ufeff/, ''); });
+  var cols = parseCSVLine(header, delim).map(function(s){ return s.trim().replace(/^\ufeff/, ''); });
 
   // 列识别:先精确识别"实际/计划/类型",再做通用兜底
   var idx = { resource: -1, task: -1, type: -1, stage: -1,
@@ -1194,7 +1589,7 @@ function parseAndApplyCSV(text) {
   // 行数据
   var rows = [];
   for (var i = 1; i < lines.length; i++) {
-    rows.push(lines[i].split(delim).map(function(s){ return s.trim(); }));
+    rows.push(parseCSVLine(lines[i], delim).map(function(s){ return s.trim(); }));
   }
 
   var newData = [];
@@ -1284,7 +1679,47 @@ function parseAndApplyCSV(text) {
   }
 }
 
+// 导出当前甘特图为 PNG 图片(2倍清晰度, 白底)
+function exportPNG() {
+  if (typeof chart === 'undefined' || !chart) { alert('图表尚未渲染, 请先打开页面上的甘特图'); return; }
+  try {
+    // v19: 左列机型名是 HTML 浮层, 不在画布内 —— 导出前用 graphic 把机型名画进画布左侧, 导出后移除
+    var NAME_W = (MODE === 'overview') ? 195 : 168;
+    var gEls = [];
+    var rowsY = window._rowLabelY || [];
+    for (var gi = 0; gi < rowsY.length; gi++) {
+      gEls.push({
+        type: 'text', silent: true, z: 1000,
+        left: 8, top: Math.max(0, rowsY[gi].y - 7),
+        style: { text: rowsY[gi].name,
+                 font: 'bold ' + (rowsY[gi].size || 11) + 'px "Microsoft YaHei", sans-serif',
+                 fill: rowsY[gi].color || '#262626' }
+      });
+    }
+    chart.setOption({ grid: { left: NAME_W + 8 }, graphic: gEls });
+    var url = chart.getDataURL({ pixelRatio: 2, backgroundColor: '#fff' });
+    chart.setOption({ grid: { left: 5 }, graphic: [] });
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = 'gantt_' + (MODE === 'overview' ? 'overview' : MODE.replace(/^stage-/, '')) + '_' + new Date().toISOString().slice(0,10) + '.png';
+    a.click();
+  } catch(ePng) { alert('导出失败: ' + ePng.message); }
+}
+
 function exportHTML() {
+  // 导出前清理动态渲染残留(chart canvas/左侧标签/图例/矩阵/错误提示),
+  // 避免导出文件越滚越大、把旧 canvas 结构也带进新文件
+  try {
+    if (chart) { chart.dispose(); chart = null; }
+    var chartEl = document.getElementById('chart');
+    if (chartEl) { chartEl.innerHTML = ''; chartEl.removeAttribute('_echarts_instance_'); chartEl.style.cssText = ''; }
+    var cleanIds = ['yLabels', 'legendBox', 'upgradeMatrix', 'err', 'pageTitle'];
+    for (var ci = 0; ci < cleanIds.length; ci++) {
+      var cel = document.getElementById(cleanIds[ci]);
+      if (cel) cel.innerHTML = '';
+    }
+  } catch(eClean) {}
+
   var html = document.documentElement.outerHTML;
   html = html.replace(/var MACHINES = \{[\s\S]*?\};/, 'var MACHINES = ' + JSON.stringify((function () {
     var out = {};
@@ -1298,6 +1733,9 @@ function exportHTML() {
   var blob = new Blob([html], {type: 'text/html;charset=utf-8'});
   var a = document.createElement('a'); a.href = URL.createObjectURL(blob);
   a.download = 'gantt_v3_' + new Date().toISOString().slice(0,10) + '.html'; a.click();
+
+  // 导出后立即恢复当前页面渲染
+  setTimeout(function(){ renderTable(); refreshChart(); }, 0);
 }
 
 function importHTML(e) {
@@ -1305,14 +1743,37 @@ function importHTML(e) {
   var r = new FileReader();
   r.onload = function() {
     try {
-      var match = r.result.match(/var defaultData = (\[[\s\S]*?\]);/);
-      if (match) {
-        data = JSON.parse(match[1]);
-        // progress 留空(null)合法:条照画、不标百分比
-        for (var i = 0; i < data.length; i++) {
-          if (data[i].progress === '') data[i].progress = null;
+      var txt = r.result;
+      var arr = null;
+      // 新格式: var MACHINES = {...} → 展平为任务数组
+      var mm = txt.match(/var MACHINES = (\{.*\});/);
+      if (mm) {
+        var mach = JSON.parse(mm[1]);
+        arr = [];
+        for (var mk in mach) {
+          var ts = (mach[mk] && mach[mk].tasks) || [];
+          for (var i = 0; i < ts.length; i++) {
+            var it = JSON.parse(JSON.stringify(ts[i]));
+            if (it.progress === '') it.progress = null;
+            arr.push(it);
+          }
         }
-        save(); renderTable(); refreshChart(); alert('导入成功！');
+      }
+      // 兼容旧格式: var defaultData = [...]
+      if (!arr) {
+        var dm = txt.match(/var defaultData = (\[[\s\S]*?\]);/);
+        if (dm) {
+          arr = JSON.parse(dm[1]);
+          for (var j = 0; j < arr.length; j++) {
+            if (arr[j].progress === '') arr[j].progress = null;
+          }
+        }
+      }
+      if (arr) {
+        data = arr;
+        save(); renderTable(); refreshChart(); alert('导入成功！共 ' + arr.length + ' 条任务');
+      } else {
+        alert('导入失败: 未找到数据(需要文件内含 var MACHINES = {...} 或 var defaultData = [...])');
       }
     } catch(err) { alert('导入失败: ' + err.message); }
   };
@@ -1331,6 +1792,11 @@ function refreshChart() {
   // v4: 按 Tab 模式构造输入数据(渲染引擎本身不变, 只换输入)
   var srcData = getModeData();
   if (!srcData.length) return;
+  // v20e: 状态筛选在阶段/任务级生效 —— 只保留命中状态的阶段的任务(否则机型行会带着未闭环阶段一起画出来)
+  if (FILTER_STATUS !== 'all') {
+    var fsrc = filterTasksByStatus(srcData);
+    if (fsrc.length) srcData = fsrc;   // 全不命中时保留原数据(机型级同样不命中, 图为空)
+  }
   CURRENT_META = (MODE === 'overview') ? computeMachineMeta() : null;
 
   // v7: 大类聚合阶段视图(DETAIL_VIEW='stage',无入口保留); 单机型阶段图(isSingleStage)不聚合,按阶段+里程碑展开
@@ -1341,32 +1807,27 @@ function refreshChart() {
   else if (isSingleStage) srcData = sortByStageAndStep(srcData);
 
   // 左列宽度:概览175 / 单机型阶段图280(阶段标题+任务名+升级点) / 其他150
-  document.getElementById('chartWrap').style.marginLeft = (MODE === 'overview') ? '175px' : (isSingleStage ? '280px' : (STAGE_MODE ? '330px' : '150px'));
+  // v17: 左列宽度同步加宽(概览195 / 单机型阶段图280 / 详情195, 与 yLabels 宽度对应)
+  document.getElementById('chartWrap').style.marginLeft = (MODE === 'overview') ? '195px' : (isSingleStage ? '280px' : (STAGE_MODE ? '330px' : '195px'));
 
   // 单机型阶段视图显示返回按钮
-  var backBtn = document.getElementById('backBtn');
-  if (backBtn) {
-    if (isSingleStage) {
-      var bm = MODE.slice(6);
-      var bcat = (CATEGORY_MAP[bm] === '2500KW') ? 'd2500' : 'd3450';
-      backBtn.style.display = '';
-      backBtn.textContent = (bcat === 'd2500' ? '← 返回 2500KW 机型列表' : '← 返回 3450KW 机型列表');
-    } else {
-      backBtn.style.display = 'none';
-    }
-  }
+  // v20: 返回入口改到 pageTitle 面包屑(见下方 pt.innerHTML), 页签行不再放按钮
   // 同步 Tab 高亮(stage-xxx 时高亮对应大类 Tab)
   var tabs = document.querySelectorAll('#tabs .tab');
   var tabMode = isSingleStage ? ((CATEGORY_MAP[MODE.slice(6)] === '2500KW') ? 'd2500' : 'd3450') : MODE;
   for (var ti = 0; ti < tabs.length; ti++)
     tabs[ti].classList.toggle('active', tabs[ti].getAttribute('data-mode') === tabMode);
 
-  // 页面标题(单机型阶段视图显示机型名)
+  // 页面标题(单机型阶段视图显示面包屑: ← 返回大类机型列表 / 机型名)
   var pt = document.getElementById('pageTitle');
   if (pt) {
     if (isSingleStage) {
+      var bcat2 = (CATEGORY_MAP[MODE.slice(6)] === '2500KW') ? 'd2500' : 'd3450';
+      var bcatTxt = (bcat2 === 'd2500') ? '2500KW 机型列表' : '3450KW 机型列表';
       pt.style.display = '';
-      pt.innerHTML = '<span class="page-title-machine">' + escHtml(MODE.slice(6)) + '</span> <span class="page-title-sub">各阶段进度与升级点</span>';
+      pt.innerHTML = '<a class="back-link" onclick="goBackToCategory();return false;">&#8592; ' + bcatTxt + '</a>'
+                   + '<span class="crumb-sep">/</span>'
+                   + '<span class="page-title-machine">' + escHtml(MODE.slice(6)) + '</span>';
     } else {
       pt.style.display = 'none';
     }
@@ -1397,7 +1858,13 @@ function refreshChart() {
     for (var i = 0; i < srcData.length; i++)
       if (resources.indexOf(srcData[i].resource) === -1) resources.push(srcData[i].resource);
   }
-  if (!STAGE_MODE && !isSingleStage) resources.reverse();   // 阶段视图保持 批量→一阶段→二阶段… 自上而下
+  // v19: 检索/筛选/排序(单机型阶段图只过滤阶段行; 概览页分组内排序以保持大类标题正确)
+  if (isSingleStage) {
+    resources = filterStageRows(resources, srcData);
+  } else {
+    if (!STAGE_MODE) resources.reverse();
+    resources = filterSortMachines(resources);
+  }
 
   // yCats 精细网格(每格2px):
   // 概览页:只有一条实际条 → BAR_U=12 + 大组间距24 = 每机型48格=96px
@@ -1412,23 +1879,25 @@ function refreshChart() {
   var sepRows = [];     // 分隔标题行在网格中的起始行号(概览页用)
 
   if (MODE === 'overview' && CURRENT_META) {
-    // 概览页: 在两组机型前各插入一行分隔标题(占满 GROUP_H 高度)
+    // 概览页: 在两组机型前各插入一行分隔标题(占满 GROUP_H 高度); 某组被筛空时不插其标题行
     var n2500ov = 0;
     for (var si = 0; si < resources.length; si++) {
       var sm = CURRENT_META[resources[si]];
       if (sm && sm.category === '2500KW') n2500ov++;
     }
     var gridRow = 0;
-    // 第一组分隔标题
-    sepRows.push(gridRow);
-    for (var u = 0; u < GROUP_U; u++) yCats.push('');
-    gridRow += GROUP_U;
+    // 第一组分隔标题(仅当该组有机型时插入)
+    if (n2500ov > 0) {
+      sepRows.push(gridRow);
+      for (var u = 0; u < GROUP_U; u++) yCats.push('');
+      gridRow += GROUP_U;
+    }
     for (var i = 0; i < resources.length; i++) {
       rowBase[i] = gridRow;
       for (var u = 0; u < GROUP_U; u++) yCats.push('');
       gridRow += GROUP_U;
-      // 2500KW→3450KW 之间插入第二组分隔标题
-      if (i === n2500ov - 1 && n2500ov < resources.length) {
+      // 2500KW→3450KW 之间插入第二组分隔标题(仅当 3450 组有机型时)
+      if (i === n2500ov - 1 && i < resources.length - 1) {
         sepRows.push(gridRow);
         for (var u = 0; u < GROUP_U; u++) yCats.push('');
         gridRow += GROUP_U;
@@ -1453,11 +1922,18 @@ function refreshChart() {
     if (ar.end > globalEnd) globalEnd = ar.end;
   }
 
+  // 详情页: 时间轴末端补齐到数据结束月之后的下月1号(让横轴多显示约一个月, 条形整体缩短)
+  if (MODE !== 'overview') {
+    var padEnd = new Date(globalEnd.getFullYear(), globalEnd.getMonth() + 1, 1);
+    if (padEnd > globalEnd) globalEnd = padEnd;
+  }
+
   var maxDays = Math.round((globalEnd - globalStart) / 86400000) + 1;
 
-  // v4: 概览页压缩横轴(4px/天一屏看全局); 详情页保持 7px/天
+  // v21: 概览页压缩横轴(4px/天一屏看全局); 详情页 7px/天
+  //      详情页不再设 1400px 最小宽度(否则天数少时会被撑开到 9px+/天, 两页密度不一致)
   var pxPerDay = (MODE === 'overview') ? 4 : 7;
-  var chartWidth = Math.max((MODE === 'overview' ? 900 : 1400), maxDays * pxPerDay + 180);
+  var chartWidth = Math.max((MODE === 'overview' ? 900 : 1000), maxDays * pxPerDay + 180);
 
   // 每月1号偏移
   var monthDayOffsets = [];
@@ -1479,9 +1955,9 @@ function refreshChart() {
     xAxis: todayOff,
     lineStyle: { color: '#F5222D', width: 2, type: 'solid' },
     label: {
-      show: true, position: 'start', distance: 8,
+      show: true, position: 'start', distance: 6, align: 'right',
       color: '#F5222D', fontSize: 12, fontWeight: 'bold',
-      formatter: '今天 ' + (today0.getMonth() + 1) + '/' + today0.getDate()
+      formatter: '今天 ' + today0.getFullYear() + '-' + (today0.getMonth() + 1) + '-' + today0.getDate()
     }
   });
 
@@ -1521,7 +1997,7 @@ function refreshChart() {
   var TOTAL_ROWS = yCats.length;  // 精细网格行数(含分隔标题行)
 
   // 动态画布高度:每组固定66px(计划20+缝6+实际20+组间20)
-  var GRID_TOP = 30, GRID_BOTTOM = 25;
+  var GRID_TOP = 46, GRID_BOTTOM = 25;
   var chartH = GRID_TOP + TOTAL_ROWS * UNIT + GRID_BOTTOM;
   document.getElementById('chart').style.height = chartH + 'px';
   document.getElementById('chartWrap').style.height = (chartH + 20) + 'px';
@@ -1591,26 +2067,50 @@ function refreshChart() {
             };
           }
         }
-        // v11:延期文字顶层标签层(与条块同起止, 仅中间行显示文字)
-        // v12:同行文字重叠时去重——多个延期slot的标签中心距<宽度则只留层级最高者
-        if (MODE !== 'overview' && drawActual && delayed && actDur > 0) {
-          var labelCx = 5 + ((actStartOff + actDur / 2) / maxDays) * PLOT_W;  // 标签中心x像素
-          var taken = delayLabelTaken[actualBase] || (delayLabelTaken[actualBase] = []);
-          var collide = false;
-          for (var tc = 0; tc < taken.length; tc++) {
-            if (Math.abs(taken[tc] - labelCx) < DELAY_LABEL_HALF_PX * 2) { collide = true; break; }
+        // v11:条内文字顶层标签层(与条块同起止, 仅中间行显示文字)
+        // v12:同行文字重叠时去重——多个slot的标签中心距<宽度则只留层级最高者
+        // v17:延期显示「延期 N 天」
+        // v19:偏差标签——延期标红「延期 N 天」, 提前完工标绿「提前 N 天」, 按期不打标
+        var isAheadFlag = isAhead(t);
+        if (MODE !== 'overview' && drawActual && actDur > 0 && (delayed || isAheadFlag)) {
+          var baseText = delayed ? ('延期 ' + getDelayDays(t) + ' 天') : ('提前 ' + getAheadDays(t) + ' 天');
+          // v21c: 标签带上任务名(去阶段前缀), 标明是谁在延期/提前
+          var shortTask = String(t.task || '');
+          if (t.stage && shortTask.indexOf(t.stage) === 0) shortTask = shortTask.slice(t.stage.length);
+          var labelText = shortTask ? (shortTask + ' ' + baseText) : baseText;
+          // 估算标签像素宽(中文≈11px/字, ASCII≈6px/字)换算成天, 作为透明"标签载体段"宽度
+          var lwPx = 0;
+          for (var ci = 0; ci < labelText.length; ci++) lwPx += (labelText.charCodeAt(ci) > 255 ? 11 : 6);
+          var wDays = Math.max(3, Math.ceil(lwPx / pxPerDay));
+          // 初始位置: 实际段水平居中; 与同行已放置标签重叠则右移,
+          // 但最多移到"条尾+半个标签宽"(v21d: 标签必须贴着自己的实际条, 没有条块托底就丢弃不显示)
+          var segEnd = actStartOff + actDur;
+          var cx = actStartOff + Math.floor(actDur / 2) - Math.floor(wDays / 2);
+          if (cx < 0) cx = 0;
+          var maxCx = segEnd + Math.floor(wDays / 2) - wDays;
+          var placed = delayLabelTaken[actualBase] || (delayLabelTaken[actualBase] = []);
+          var _ok = true, _guard = 0;
+          while (_guard++ < 60) {
+            var _hit = -1;
+            for (var tc = 0; tc < placed.length; tc++) {
+              if (cx < placed[tc][1] + 1 && cx + wDays > placed[tc][0]) { _hit = tc; break; }
+            }
+            if (_hit === -1) break;
+            cx = placed[_hit][1] + 1;
+            if (cx > maxCx) { _ok = false; break; }
           }
-          if (!collide) {
-            taken.push(labelCx);
+          if (_ok) {
+            placed.push([cx, cx + wDays]);
             var midRow = actualBase + Math.floor(BAR_U / 2);
             for (var j2 = 0; j2 < BAR_U; j2++) {
               var rrD = actualBase + j2;
-              delayOff[rrD] = actStartOff;
-              delayItems[rrD] = { value: actDur, itemStyle: { color: 'transparent', borderColor: 'transparent' } };
+              delayOff[rrD] = cx;
+              delayItems[rrD] = { value: wDays, itemStyle: { color: 'transparent', borderColor: 'transparent' } };
             }
             delayItems[midRow].label = {
-              show: true, position: 'inside', formatter: '延期',
-              color: '#F5222D', fontSize: 11, fontWeight: 'bold',
+              show: true, position: 'inside', formatter: labelText,
+              color: delayed ? '#F5222D' : '#1E7B34',
+              fontSize: 11, fontWeight: 'bold',
               textBorderColor: '#fff', textBorderWidth: 2
             };
           }
@@ -1638,7 +2138,7 @@ function refreshChart() {
         silent: true, symbol: 'none',
         lineStyle: { color: '#e8e8e8', type: 'solid', width: 1 },
         label: {
-          show: true, position: 'start', distance: 8,
+          show: true, position: 'start', distance: 24,
           color: '#333', fontSize: 13,
           formatter: function(params) {
             var d = new Date(globalStart.getTime() + params.value * 86400000);
@@ -1671,12 +2171,12 @@ function refreshChart() {
         silent: true, symbol: 'none',
         lineStyle: { color: '#e8e8e8', type: 'solid', width: 1 },
         label: {
-          show: true, position: 'start', distance: 8,
+          show: true, position: 'start', distance: 24,
           color: '#333', fontSize: 13,
           formatter: function(params) {
             var d = new Date(globalStart.getTime() + params.value * 86400000);
-            // 标注"1日",避免误以为竖线在月中
-            return d.getFullYear() + '年' + (d.getMonth() + 1) + '月1日';
+            // v17: 统一日期格式(去掉"1日", 与"今天 2026-10-22"风格一致)
+            return d.getFullYear() + '年' + (d.getMonth() + 1) + '月';
           }
         },
         data: markLineData
@@ -1710,7 +2210,11 @@ function refreshChart() {
         var ld = parseDate(lt._labelDate);
         if (isNaN(ld)) continue;
         var w = Math.ceil(String(lt.segLabel || '').length * 0.75) + 2;
+        // 段块实际起点(实际起止): 标签不允许超出段块左缘, 避免贴近图表左边界时文字被裁掉
+        var arL = getActualRange(lt);
+        var segOff = Math.max(0, Math.round((arL.start - globalStart) / 86400000));
         var aOff = Math.round((ld - globalStart) / 86400000) - Math.floor(w / 2);
+        if (aOff < segOff) aOff = segOff;
         if (aOff < 0) aOff = 0;
         for (var lj = 0; lj < BAR_U; lj++) {
           var rr2 = rowBase[li] + lj;   // 概览页 actualBase == rowBase[i]
@@ -1745,7 +2249,13 @@ function refreshChart() {
 
   document.getElementById('chart').style.width = chartWidth + 'px';
 
-  if (!chart) chart = echarts.init(document.getElementById('chart'));
+  if (!chart) {
+    // 仅首次初始化时清理导出文件可能残留的旧渲染 DOM(防止 canvas 叠加);
+    // 不能放在每次 refreshChart 里, 否则切页签时会把活实例的 DOM 清空导致崩溃
+    var chartElInit = document.getElementById('chart');
+    if (chartElInit && chartElInit.innerHTML) chartElInit.innerHTML = '';
+    chart = echarts.init(document.getElementById('chart'));
+  }
   chart.clear();
 
   chart.setOption({
@@ -1792,7 +2302,7 @@ function refreshChart() {
       }
     },
     legend: { show: false },
-    grid: { left: 5, right: 30, top: 30, bottom: 25, containLabel: false },
+    grid: { left: 5, right: 30, top: 46, bottom: 25, containLabel: false },
     xAxis: {
       type: 'value', min: 0, max: maxDays,
       axisLine: { show: true, lineStyle: { color: '#999', width: 1.5 } },
@@ -1809,10 +2319,35 @@ function refreshChart() {
   });
 
   chart.resize();
+  // v19: 记录每行机型名在画布内的 y 中心(供导出 PNG 时把名字画进画布 —— 左列 HTML 浮层不在画布内)
+  window._rowLabelY = [];
+  for (var ri3 = 0; ri3 < resources.length; ri3++) {
+    window._rowLabelY.push({
+      name: resources[ri3],
+      y: GRID_TOP + rowBase[ri3] * UNIT + BAR_U * UNIT / 2,
+      color: '#262626', size: 11
+    });
+  }
+  // 概览页: 分组标题也画进导出图
+  if (MODE === 'overview' && sepRows.length) {
+    var sepTextsX = ['2500KW（含1250kW）', '3450KW（含1750/1000kW）'];
+    var sepColorsX = ['#B37508', '#1F78B4'];
+    for (var sx = 0; sx < sepRows.length && sx < sepTextsX.length; sx++) {
+      window._rowLabelY.push({
+        name: sepTextsX[sx],
+        y: GRID_TOP + sepRows[sx] * UNIT + BAR_U * UNIT / 2,
+        color: sepColorsX[sx], size: 13
+      });
+    }
+  }
   renderYLabels(resources);
   if (MODE === 'overview') { renderOverviewLegend(); renderUpgradeMatrix(); }
   else if (STAGE_MODE) renderStageLegend();
   else renderLegend(stages);
+  // v19: 风险看板(阶段粒度)与筛选结果提示
+  renderRiskBoard();
+  var fi = document.getElementById('filterInfo');
+  if (fi) fi.textContent = FILTER_INFO || '';
   // 非概览页隐藏升级点矩阵表格
   if (MODE !== 'overview') {
     var um = document.getElementById('upgradeMatrix');
@@ -1842,7 +2377,7 @@ function renderYLabels(resources) {
 
   // 与 refreshChart 一致的像素布局(UNIT=2px/格)
   var UNIT = 2;
-  var GRID_TOP = 30;
+  var GRID_TOP = 46;
   var BAR_H = UNIT * 12;  // 24px
   var INNER_GAP = UNIT * 4;  // 8px
   var GROUP_GAP = (MODE === 'overview') ? UNIT * 22 : UNIT * 20;
@@ -1859,10 +2394,10 @@ function renderYLabels(resources) {
       if (sm && sm.category === '2500KW') n2500lb++;
     }
     var gr = 0;
-    lblSepRows.push(gr); gr++;  // 第一组分隔标题
+    if (n2500lb > 0) { lblSepRows.push(gr); gr++; }  // 第一组分隔标题(组空时不插)
     for (var i = 0; i < resources.length; i++) {
       lblRowBase[i] = gr; gr++;
-      if (i === n2500lb - 1 && n2500lb < resources.length) {
+      if (i === n2500lb - 1 && i < resources.length - 1) {
         lblSepRows.push(gr); gr++;  // 第二组分隔标题
       }
     }
@@ -1875,9 +2410,29 @@ function renderYLabels(resources) {
 
   box.style.top = '20px';
   box.style.left = '20px';
-  box.style.width = (MODE === 'overview') ? '150px' : '125px';
+  // v17: ▸ 箭头与 row-tag 占位后左右两列都需加宽, 否则徽标被挤出
+  box.style.width = (MODE === 'overview') ? '172px' : '168px';
   box.style.height = CHART_H + 'px';
   box.style.display = 'block';
+
+  // 机型链接统一构造函数(可点击提示: ▸ 箭头 + hover 高亮)
+  function makeMachineLink(mn) {
+    var a = document.createElement('a');
+    a.className = 'machine-link';
+    a.innerHTML = '<span class="ml-arrow">&#9656;</span>' + escHtml(mn);
+    a.href = 'javascript:void(0)';
+    a.title = '点击查看该机型各阶段进度';
+    a.onclick = function(){ openMachineStage(mn); return false; };
+    return a;
+  }
+  // 详情页计划行加「计划」标签, 与下方「实际」呼应(概览页只有一条, 不加)
+  function appendPlanTag(row) {
+    if (MODE === 'overview') return;
+    var tag = document.createElement('span');
+    tag.className = 'row-tag';
+    tag.textContent = '计划';
+    row.appendChild(tag);
+  }
 
   for (var i = 0; i < resources.length; i++) {
     var base = GRID_TOP + lblRowBase[i] * GROUP_H;
@@ -1890,13 +2445,7 @@ function renderYLabels(resources) {
       var bCls = mm.isReplaced ? 'lc-b-rep' : (mm.status === '已完成' ? 'lc-b-done' : (mm.status === '规划中' ? 'lc-b-plan' : 'lc-b-dev'));
       var bTxt = mm.isReplaced ? '已替代' : mm.status;
       // v9: 概览页机型名也可点击进入该机型阶段图(与详情页机型视图一致)
-      var ovLink = document.createElement('a');
-      ovLink.textContent = resources[i];
-      ovLink.href = 'javascript:void(0)';
-      ovLink.style.cssText = 'cursor:pointer;text-decoration:none;color:#1F78B4;border-bottom:1px dashed #1F78B4;';
-      ovLink.title = '点击查看该机型各阶段进度';
-      (function(mn){ ovLink.onclick = function(){ openMachineStage(mn); return false; }; })(resources[i]);
-      planRow.appendChild(ovLink);
+      planRow.appendChild(makeMachineLink(resources[i]));
       planRow.appendChild(document.createTextNode(' '));
       var ovBadge = document.createElement('span');
       ovBadge.className = 'lc-badge ' + bCls;
@@ -1904,22 +2453,11 @@ function renderYLabels(resources) {
       planRow.appendChild(ovBadge);
     } else if (MODE !== 'overview') {
       // 详情页机型视图: 点击机型名 → 进入该机型的阶段图
-      var nameLink = document.createElement('a');
-      nameLink.textContent = resources[i];
-      nameLink.href = 'javascript:void(0)';
-      nameLink.style.cssText = 'cursor:pointer;text-decoration:none;color:#1F78B4;border-bottom:1px dashed #1F78B4;';
-      nameLink.title = '点击查看该机型各阶段进度';
-      (function(mn){ nameLink.onclick = function(){ openMachineStage(mn); return false; }; })(resources[i]);
-      planRow.appendChild(nameLink);
+      planRow.appendChild(makeMachineLink(resources[i]));
+      appendPlanTag(planRow);
     } else {
       // v9: 概览页无元数据机型也做成可点击链接(与详情页一致)
-      var ovLink2 = document.createElement('a');
-      ovLink2.textContent = resources[i];
-      ovLink2.href = 'javascript:void(0)';
-      ovLink2.style.cssText = 'cursor:pointer;text-decoration:none;color:#1F78B4;border-bottom:1px dashed #1F78B4;';
-      ovLink2.title = '点击查看该机型各阶段进度';
-      (function(mn){ ovLink2.onclick = function(){ openMachineStage(mn); return false; }; })(resources[i]);
-      planRow.appendChild(ovLink2);
+      planRow.appendChild(makeMachineLink(resources[i]));
     }
     planRow.style.position = 'absolute';
     planRow.style.left = '0'; planRow.style.right = '0';
@@ -1931,7 +2469,7 @@ function renderYLabels(resources) {
     // 实际行(与计划条间隔6px)
     var actualRow = document.createElement('div');
     actualRow.className = 'y-label-row y-label-actual';
-    actualRow.textContent = '实际';
+    actualRow.innerHTML = '<span class="row-tag">实际</span>';
     actualRow.style.position = 'absolute';
     actualRow.style.left = '0'; actualRow.style.right = '0';
     actualRow.style.height = BAR_H + 'px';
@@ -2024,25 +2562,24 @@ for (var ti = 0; ti < tabEls.length; ti++) {
       for (var tj = 0; tj < tabEls.length; tj++) tabEls[tj].classList.remove('active');
       el.classList.add('active');
       MODE = el.getAttribute('data-mode');
+      try { sessionStorage.setItem('wb_mode', MODE); } catch(eTab) {}
       refreshChart();
     });
   })(tabEls[ti]);
 }
 
-// v6: 点击机型名进入单机型阶段图; 返回按钮回到大类机型视图
+// v6: 点击机型名进入单机型阶段图; v20: 面包屑返回链接回到大类机型视图
 function openMachineStage(mn) {
   MODE = 'stage-' + mn;
+  try { sessionStorage.setItem('wb_mode', MODE); } catch(eStg) {}
   refreshChart();
 }
-var backBtnEl = document.getElementById('backBtn');
-if (backBtnEl) {
-  backBtnEl.addEventListener('click', function() {
-    if (MODE.indexOf('stage-') !== 0) return;
-    var m = MODE.slice(6);
-    MODE = (CATEGORY_MAP[m] === '2500KW') ? 'd2500' : 'd3450';
-    DETAIL_VIEW = 'machine';
-    refreshChart();
-  });
+function goBackToCategory() {
+  if (MODE.indexOf('stage-') !== 0) return;
+  var m = MODE.slice(6);
+  MODE = (CATEGORY_MAP[m] === '2500KW') ? 'd2500' : 'd3450';
+  DETAIL_VIEW = 'machine';
+  refreshChart();
 }
 
 refreshChart();
